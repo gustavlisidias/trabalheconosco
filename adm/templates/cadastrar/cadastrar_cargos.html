@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Cadastrar >> Cargo</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i
+								class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Cadastro -->
+			<section id="banner">
+				<div class="content">
+					<form method="post">
+						{% csrf_token %}
+						<div style="margin-bottom: 1rem">
+							<label for="id_nome_cargo">Cargo</label>
+							<input type="text" name="nome_cargo" maxlength="32" required id="id_nome_cargo">
+						</div>
+						<div style="margin-bottom: 1rem">
+							<label for="id_descricao_cargo">Descrição</label>
+							<input type="text" name="descricao_cargo" maxlength="32" id="id_descricao_cargo">
+						</div>
+						<button type="submit">Salvar</button>
+					</form>
+				</div>
+			</section>
+			<!-- Fim Cadastro -->
+
+		</div>
+	</div>
+
+	{% include 'menu.html' %}
+
+</div>
+
+{% endblock content %}

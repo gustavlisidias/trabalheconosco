@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% include '../mails/messages.html' %}
+
+
+<div class="container-base mt-5" style="background-image: url('/static/login/images/background.jpg'); min-width: 100%;">
+    <div class="col-md-12 col-12 mt-md-0 mt-5 d-flex justify-content-center align-self-center">
+        <div class="box my-5 fonte" style="background-color: #ffffff;  min-width: 80%;">
+            <div class="py-5">
+                <div class="px-5 py-3">
+                    {% for item in validate %}
+                        <h5 class="font-weight-normal d-flex justify-content-center align-self-center">
+                            {{ item.cargo }} - {{ item.setor }}</h5>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <b>Código da Vaga: </b>{{ item.codigo_vaga }}
+                            </div>
+                            <div class="col" style="text-align-last: right;">
+                                <b>Validade: </b>{{ item.data_validade|date:"SHORT_DATE_FORMAT"  }}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <b>Informações: </b>
+                                <div>{{ item.quantidade }} vaga{{ item.quantidade|pluralize }}
+                                    {{ item.contratacao }} disponíve{{ item.quantidade|pluralize:"l,is" }}, com
+                                    jornada das {{ item.jornada }}</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <b>Qualificação: </b>
+                                <div>{{ item.qualificacao|safe }}</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <b>Atividades: </b>
+                                <div>{{ item.atividades|safe }}</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <b>Descrição: </b>
+                                <div>{{ item.descricao|safe }}</div>
+                            </div>
+                        </div>
+                        <br>
+                    {% endfor %}
+
+                    <form action="" method="post" class="my-0">
+                        {% csrf_token %}
+                        {{ form.management_form }}
+                        {% if request.user.is_authenticated %}
+                            {% for field in form %}
+                                <button class="btn btn-success" type="submit">Cadastrar</button>
+                            {% endfor %}
+                        {% else %}
+                            <a class="btn btn-success" href="{% url 'entrar' %}">Cadastrar</a>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load chartkick %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'adm/assets/css/candidatos.css' %}?{% now 'U' %}" type="text/css" />
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Fase - Usuário >> Editar</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Contas -->
+			<section>
+				<form method="POST">
+					{% csrf_token %}
+					{% for i in fase %}
+						<header class="major">
+							<h3>{{i.fase}} - {{ i.usuario }}</h3>
+						</header>
+
+						<div id="div_obs" style="display: none" value="{{ i.observacao }}">{{ i.observacao|safe }}</div>
+
+						{{ form.observacao }}
+
+						<script>
+							window.onload = function () {
+								var t = document.getElementById("div_obs").getAttribute('value');
+								CKEDITOR.instances.id_observacao.setData(t);
+							};
+						</script>
+						<br>
+					{% endfor %}	
+					<button class="btn mt-5" type="submit">Salvar</button>
+				</form>
+			</section>
+			<!-- Fim Contas -->
+
+		</div>
+	</div>
+
+	{% include 'menu.html' %}
+	{% include 'adm/assets/js/main.html' %}
+	
+</div>
+{% endblock content %}

@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load customfilters %}
+{% block content %}
+
+{% include '../../mails/messages.html' %}
+
+<link rel="stylesheet" href="{% static 'home/assets/css/main.css' %}?{% now 'U' %}" type="text/css" />
+
+<div class="container-base mt-md-4 mt-5" style="background-image: url('/static/login/images/background.jpg');">
+    <div class="col-md-12 col-12 mt-md-4 mt-5 d-flex justify-content-center align-self-center text-center">
+        <div class="box my-5 px-5" style="min-width: 60%">
+
+            <div class="col mt-5">
+                <h3>Bem-vindo(a), {{ request.user }} {% if request.user.is_interno %}<i class="fas fa-award"></i>{% endif %}</h3>
+            </div>
+
+            <!-- Postagem de foto -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if foto %}
+                    {% for f in foto %}
+                        <label for="id_imagem">
+                            <img id="output" src="{{ f.imagem.url }}" width="200" height="200">
+                        </label>
+                    {% endfor %}
+					<label for="id_imagem" style="cursor: pointer;">Alterar Foto
+                        <button style="height: 20%; background-color: #fff" type="submit">
+                            Salvar <i class="fas fa-save"></i>
+                        </button>
+                    </label>
+                {% else %}
+                    <label for="id_imagem">
+                        <img id="output" src="{% static 'base/images/user.png' %}" width="200" height="200">
+                    </label>
+					<label for="id_imagem" style="cursor: pointer;">Adicionar Foto
+                        <button style="height: 20%; background-color: #fff" type="submit">
+                            Salvar <i class="fas fa-save"></i>
+                        </button>
+                    </label>   
+                {% endif %}
+                <input type="file" name="imagem" accept="image/*" id="id_imagem" onchange="loadFile(event)" style="display: none;">
+                <script>
+                    var loadFile = function (event) {
+                        var image = document.getElementById('output');
+                        image.src = URL.createObjectURL(event.target.files[0]);
+                    };
+                </script>
+            </form>        
+            
+            <div class="row">
+                <div class="col-12 col-md-4 pb-2 d-flex justify-content-center justify-content-md-end">
+                    <a class="btn btn-outline-warning text-dark" style="width: 60%" id="modal_alterar_senha">Alterar
+                        senha</a>
+                </div>
+                <div class="col-12 col-md-4 pb-2 d-flex justify-content-center justify-content-md-center">
+                    <a class="btn btn-outline-warning text-dark" style="width: 60%" id="modal_ajuda">Ajuda</a>
+                </div>
+                <div class="col-12 col-md-4 pb-2 d-flex justify-content-center justify-content-md-start">
+                    <a class="btn btn-outline-warning text-dark" style="width: 60%" id="modal_visualizar_termo">Termo de uso</a>
+                </div>
+            </div>
+
+            <div class="col mt-2">
+                <p style="margin: 0 0 0;">Avanço de perfil: {{ avanco|floatformat:0|intcomma }}/100</p>
+            </div>
+
+            <!-- Cadastros -->
+            <div class="row content">
+                <div class="col-md-3 col-12 text-md-left text-center justify-content-center pb-3">
+                    {% if not dados_pessoais %}
+                    <a class="btn btn-dark text-white d-flex justify-content-center btn-block"
+                        id="modal_dados_pessoais">Dados <br> Pessoais</a>
+                    {% else %}
+                    <a class="btn btn-success text-white d-flex justify-content-center btn-block"
+                        id="modal_dados_pessoais">Dados <br> Pessoais</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 col-12 text-md-left text-center justify-content-center pb-3">
+                    {% if not formacoes %}
+                    <a class="btn btn-dark text-white d-flex justify-content-center btn-block"
+                        id="modal_formacoes">Formações <br> Acadêmicas</a>
+                    {% else %}
+                    <a class="btn btn-success text-white d-flex justify-content-center btn-block"
+                        id="modal_formacoes">Formações <br> Acadêmicas</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 col-12 text-md-left text-center justify-content-center pb-3">
+                    {% if not experiencias %}
+                    <a class="btn btn-dark text-white d-flex justify-content-center btn-block"
+                        id="modal_experiencias">Experiências <br> Profissionais</a>
+                    {% else %}
+                    <a class="btn btn-success text-white d-flex justify-content-center btn-block"
+                        id="modal_experiencias">Experiências <br> Profissionais</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 col-12 text-md-left text-center justify-content-center pb-3">
+                    {% if not idiomas %}
+                    <a class="btn btn-dark text-white d-flex justify-content-center btn-block"
+                        id="modal_idiomas">Línguas <br> Estrangeiras</a>
+                    {% else %}
+                    <a class="btn btn-success text-white d-flex justify-content-center btn-block"
+                        id="modal_idiomas">Línguas <br> Estrangeiras</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row content">
+                <div class="col-md-3 col-12 text-md-left text-center justify-content-center pb-3">
+                    {% if not tecnologias %}
+                    <a class="btn btn-dark text-white d-flex justify-content-center btn-block"
+                        id="modal_tecnologias">Conhecimento <br> Tecnológico</a>
+                    {% else %}
+                    <a class="btn btn-success text-white d-flex justify-content-center btn-block"
+                        id="modal_tecnologias">Conhecimento <br> Tecnológico</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 col-12 text-md-left text-center justify-content-center pb-3">
+                    {% if not dados_complementares %}
+                    <a class="btn btn-dark text-white d-flex justify-content-center btn-block"
+                        id="modal_dados_complementares">Dados <br> Complementares</a>
+                    {% else %}
+                    <a class="btn btn-success text-white d-flex justify-content-center btn-block"
+                        id="modal_dados_complementares">Dados <br> Complementares</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 col-12 text-md-left text-center justify-content-center pb-3">
+                    {% if not questionario %}
+                    <a class="btn btn-dark text-white d-flex justify-content-center btn-block"
+                        id="modal_questionario">Questionário <br> Profissional</a>
+                    {% else %}
+                    <a class="btn btn-success text-white d-flex justify-content-center btn-block"
+                        id="modal_questionario">Questionário <br> Profissional</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 col-12 text-md-left text-center justify-content-center pb-3">
+                    {% if not vagas %}
+                    <a class="btn btn-dark text-white d-flex justify-content-center btn-block"
+                        id="modal_vagas_cadastradas">Vagas <br> Cadastradas</a>
+                    {% else %}
+                    <a class="btn btn-success text-white d-flex justify-content-center btn-block"
+                        id="modal_vagas_cadastradas">Vagas <br> Cadastradas</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Arquivos e visualizar curriculo -->
+            <div class="row content pb-5">
+                <div class="col pb-3">
+                    {% if not arquivos %}
+                    <a class="btn btn-outline-warning text-dark btn-block" onclick="alertaArquivos()">Enviar arquivos</a>
+                    {% else %}
+                    <a class="btn btn-outline-warning text-dark btn-block" id="modal_arquivos">Enviar arquivos</a>
+                    {% endif %}
+                </div>
+                <div class="col pb-3">
+                    <a class="btn btn-outline-warning text-dark btn-block" id="modal_visualizar_curriculo">Visualizar
+                        currículo</a>
+                </div>
+            </div>
+            
+            <!-- modals -->
+            <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <!-- content -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Termo de uso -->
+            {% if not termo %}
+                <a class="btn btn-secondary text-white btn-block" id="modal_termo" style="display:none">Termo de Uso</a>
+
+                <script type="text/javascript">
+                    window.onload = () => {
+                        document.querySelector('[id="modal_termo"]').click();
+                    }
+                </script>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

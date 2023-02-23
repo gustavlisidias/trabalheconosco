@@ -1,0 +1,132 @@
+{% load customfilters %}
+{% if not validate %}
+
+<form class="my-0" method="post" action="">
+  {% csrf_token %}
+
+  <div class="modal-header d-flex justify-content-center">
+    <h3>Conhecimento Tecnológico</h3>
+  </div>
+
+  <div class="modal-body" id="form_tecnologia">
+    <div id="form_tecnologia">
+      {{ formset.management_form }}
+      <div class="form-group{% if field.errors %} invalid{% endif %}">
+        {% for form in formset %}
+          {{form.non_field_errors}}
+          {{form.errors}}
+          <div class=row>
+            <div class="col-md-6 col-12">
+              Sistema de Conhecimento *
+              {{ form.sistema }}
+            </div>
+            <div class="col-md-6 col-12">
+              Nível de Conhecimento *
+              {{ form.nivel_sistema }}
+            </div>
+          </div>
+        {% endfor %}
+        <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer mt-5">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-dark text-white" id="add_form_tecnologia">Adicionar</button>
+    <div id="empty_form_tecnologia" style="display:none">
+      <hr>
+      <div class=row>
+        <div class="col-md-6 col-12h">
+          Sistema de Conhecimento *
+          {{ formset.empty_form.sistema }}
+        </div>
+        <div class="col-md-6 col-12">
+          Nível de Conhecimento *
+          {{ formset.empty_form.nivel_sistema }}
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+    </div>
+    <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+  </div>
+  
+</form>
+
+{% else %}
+
+<form class="my-0" method="post" action="" id="formTecnologia">
+  {% csrf_token %}
+
+  <div class="modal-header d-flex justify-content-center">
+    <h3>Tecnologias</h3>
+  </div>
+
+  <div class="modal-body" id="form_tecnologia">
+    <div id="form_tecnologia">
+      {% for item in validate %}
+      {{ forloop.counter }}.
+      <div class=row>
+        <div class="col-md-6 col-12">
+          Sistema de Conhecimento *
+          <input type="text" name="sistema" id="id_sistema" readonly value="{{ item.sistema }}">
+        </div>
+        <div class="col-md-5 col-12">
+          Nível de Conhecimento *
+          <input type="text" name="nivel_sistema" id="id_nivel_sistema" readonly value="{{ item.nivel_sistema }}">
+        </div>
+        <div class="col-md-1 col-12 d-flex justify-content-center align-items-end mb-1">
+          {% include '../modals/deletar_tecnologia.html' %}
+          <a href="{% url 'deletar_tecnologia' item.id|conversor %}" class="confirm-delete-tecnologia btn btn-danger text-white"
+          title="Delete" data-toggle="modal" data-target="#confirmDeleteModalTecnologia" id="{{item.id|conversor}}">Excluir</a>
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+
+      <br>
+      
+      {% endfor %}
+      {{ formset.management_form }}
+      <div class="form-group {% if field.errors %} invalid {% endif %}" style="display:none">
+        {% for form in formset %}
+          {{form.non_field_errors}}
+          {{form.errors}}
+          <div class=row>
+            <div class="col-md-6 col-12">
+              Sistema de Conhecimento *
+              {{ form.sistema }}
+            </div>
+            <div class="col-md-6 col-12">
+              Nível de Conhecimento *
+              {{ form.nivel_sistema }}
+            </div>
+          </div>
+        {% endfor %}
+        <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer mt-5">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-dark text-white confirm-save-tecnologia" id="add_form_tecnologia">Adicionar</button>
+    <div id="empty_form_tecnologia" style="display:none">
+      <hr>
+      <div class=row>
+        <div class="col-md-6 col-12">
+          Sistema de Conhecimento *
+          {{ formset.empty_form.sistema }}
+        </div>
+        <div class="col-md-6 col-12">
+          Nível de Conhecimento *
+          {{ formset.empty_form.nivel_sistema }}
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+    </div>
+    <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+  </div>
+</form>
+{% endif %}
+
+{% include 'base/assets/java/java.html' %}

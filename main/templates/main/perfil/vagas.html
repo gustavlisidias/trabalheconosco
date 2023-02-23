@@ -1,0 +1,34 @@
+{% load customfilters %}
+{% load static %}
+
+<div class="modal-header d-flex justify-content-center">
+    <h3>Minhas Vagas</h3>
+</div>
+
+<div class="modal-body mb-5">
+    <div class="row">
+        <div class="col-md-10 col-8 pl-5">
+            <p class="pl-5">(Vaga) Cargo - Setor</p>
+        </div>
+    </div>
+
+    {% for item in minhas_vagas %}
+        <div class="row">
+            <div class="col-md-10 col-8 pl-5">
+                <h4 class="text-dark pl-5">({{ item.vaga.codigo_vaga }}) {{ item.vaga.cargo.nome_cargo }} - {{ item.vaga.setor.nome_setor }}</h4>
+            </div>
+            <div class="col-md-2 col-4 pr-5">
+                {% include '../../main/perfil/deletar_vaga.html' %}
+                <a href="{% url 'deletar_vaga' item.id|conversor %}" class="confirm-delete btn btn-danger text-white" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="{{item.id|conversor}}">Excluir</a>
+            </div>
+        </div>
+        </script>
+    {% endfor %}
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Fechar</button>
+</div>
+
+{% include 'base/assets/java/java.html' %}

@@ -1,0 +1,133 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+			
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Cadastrar >> Requisição</span>
+				<ul class="icons"><li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li></ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Cadastro -->
+			<section id="banner">
+				<div class="content">
+					<form method="post">
+						{% csrf_token %}
+						<div class="row" style="margin-bottom: 1rem">
+							<div class="col-2">
+								<label>Código</label>
+								{{form.codigo}}
+							</div>
+							<div class="col-4">
+								<label>Contratação</label>
+								{{form.tipo_vaga}}
+							</div>
+							<div class="col-4">
+								<label>Nível de Ensino</label>
+								{{form.ensino}}
+							</div>
+						</div>
+						<div class="row" style="margin-bottom: 1rem">
+							<div class="col-4">
+								<label>Regiao</label>
+								{{form.filial}}
+							</div>
+							<div class="col-4">
+								<label>Setor</label>
+								{{form.setor}}
+							</div>
+							<div class="col-4">
+								<label>Cargo</label>
+								{{form.cargo}}
+							</div>
+						</div>
+						<br>
+						<div class="row" style="margin-bottom: 1rem">
+							<div class="col-4">
+								<label>Salario</label>
+								{{form.salario}}
+							</div>
+							<div class="col-4">
+								<label>Gestor</label>
+								{{form.gestor}}
+							</div>
+							<div class="col-4">
+								<label>Tipo de requisição</label>
+								{{form.tipo}}
+							</div>
+						</div>
+						<br>
+
+						<div style="margin-bottom: 1rem">
+							<label>Requisitos</label>
+							{{form.requisitos}}
+						</div>
+
+						<div style="margin-bottom: 1rem">
+							<label>Atividades</label>
+							{{form.atividades}}
+						</div>
+
+						<div style="margin-bottom: 1rem">
+							<label>Habilidades</label>
+							{{form.habilidades}}
+						</div>
+
+						<div style="margin-bottom: 1rem">
+							<label>Ferramentas</label>
+							{{form.ferramentas}}
+						</div>
+
+						<div style="margin-bottom: 1rem">
+							<label>Recrutamento</label>
+							{{form.recrutamento}}
+						</div>
+
+						<div style="margin-bottom: 1rem">
+							<label>Informações</label>
+							{{form.informacoes}}
+						</div>
+
+						<button type="submit">Salvar</button>
+					</form>
+				</div>
+			</section>
+			<!-- Fim Cadastro -->
+
+			<style>
+				[type="number"] {
+					border-radius: 5px;
+					height: 2.75em;
+					border: solid 1px rgba(210, 215, 217, 0.75);
+				}
+
+				[type="date"] {
+					background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
+					height: 2.75em;
+					border: solid 1px rgba(210, 215, 217, 0.75);
+					border-radius: 5px;
+				}
+			
+				[type="date"]::-webkit-inner-spin-button {
+					display: none;
+				}
+			
+				[type="date"]::-webkit-calendar-picker-indicator {
+					opacity: 0;
+				}		
+			</style>
+		</div>
+	</div>
+
+	{% include 'menu.html' %}
+
+</div>
+
+{% endblock content %}

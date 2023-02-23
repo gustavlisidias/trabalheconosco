@@ -1,0 +1,57 @@
+{% load static %}
+
+<footer class="fonte" style="background: white;  position: absolute; width: 100%;">
+    <header class="mx-auto" style="text-align: center; background: black;">
+        <div class="row-footer">
+            <p style="font-size: 30px; ">
+                <a href="https://www.facebook.com/coloradomaquinas/" style="margin: 2%; color: white;" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=5516996087703" style="margin: 2%; color: white;" target="_blank"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/coloradomaquinas/?hl=pt-br" style="margin: 2%; color: white;" target="_blank"><i class="instagram fa fa-instagram " aria-hidden="true"></i></a>
+                <a href="https://www.linkedin.com/company/colorado-m%C3%A1quinas/" style="margin: 2%; color: white;" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                <a href="https://www.youtube.com/channel/UCOqMy2Y0Sz76tyjDNoNegiQ" style="margin: 2%; color: white;" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container" style="max-width: 1200px;">
+        <div class="row">
+
+            <div class="col-md-4 col-12 d-flex justify-content-center align-self-center text-center mb-md-0 mb-3">
+                <div>
+                    <p>
+                        Rodovia Anhanguera, KM 313<br>
+                        Marginal Pista Sul<br>
+                        Jardim Salgado Filho, Ribeirão Preto - SP<br>
+                        CEP: 14079-000<br>
+                        <i class="fa-solid fa-phone"></i> (16) 99608-7703<br>
+                        <i class="fa-solid fa-link"></i><a style="font-size: 100%;" href="http://www.coloradomaquinas.com.br/"> Visite Nosso Site</a><br>
+                        <i class="fa-solid fa-envelope"></i><a style="font-size: 85%;" href="mailto:rh.coloradomaquinas@coloradoagro.com.br"> rh.coloradomaquinas@coloradoagro.com.br</a>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-12 d-flex justify-content-center align-self-center text-center mb-md-0 mb-3">
+                <div>
+                    <h2>Colorado Máquinas</h2>
+                    <img src="{% static 'base/images/logo02.png' %}" class="img-fluid mx-auto d-block"
+                        style="width: 75%; height: 70%;">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12 d-flex justify-content-center align-self-center text-center mb-md-0 mb-3">
+                <div id="map-container-google-2">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119066.6511475355!2d-47.81366520565315!3d-21.159049311444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94b9c757961063bb%3A0xae2e902a1484e00a!2sColorado%20Com%C3%A9rcio%20de%20M%C3%A1quinas%20Agr%C3%ADcolas!5e0!3m2!1spt-BR!2sbr!4v1588861398842!5m2!1spt-BR!2sbr" width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+
+        </div>
+    </div>
+    
+    <br>
+    
+    <div class="container">
+        <p style="text-align: center;">© Colorado Comércio de Máquinas Agrícolas LTDA</p>
+    </div>
+
+    {% include 'base/assets/java/java.html' %}
+    
+</footer>

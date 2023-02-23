@@ -1,0 +1,257 @@
+{% load customfilters %}
+{% if not validate %}
+<form class="my-0" method="post" action="">
+  {% csrf_token %}
+
+  <div class="modal-header d-flex justify-content-center">
+    <h3>Experiências Profissionais</h3>
+  </div>
+
+  <div class="modal-body" id="form_experiencia">
+    <div id="form_experiencia">
+      {{ formset.management_form }}
+      <div class="form-group{% if field.errors %} invalid {% endif %}">
+        {% for form in formset %}
+        {{form.non_field_errors}}
+        {{form.errors}}
+        <div class="row">
+          <div class="col-md-6 col-12">
+            Organização *
+            {{ form.empresa }}
+          </div>
+          <div class="col-md-6 col-12">
+            Área de Atuação *
+            {{ form.atuacao }}
+          </div>
+        </div>
+        <br class="d-none d-lg-block">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            Cargo *
+            {{ form.cargo_exp }}
+          </div>
+          <div class="col-md-6 col-12">
+            Atividades *
+            {{ form.atividades_exp }}
+          </div>
+        </div>
+        <br class="d-none d-lg-block">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            Data de Entrada *
+            {{ form.data_entrada }}
+          </div>
+          <div class="col-md-6 col-12">
+            Data de Saída <a class="text-muted" style="font-size: smaller;"> (em caso de ainda estar em atuação, deixar em branco)</a>
+            {{ form.data_saida }}
+          </div>
+        </div>
+        {% endfor %}
+        <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer mt-5">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-dark text-white" id="add_form_experiencia">Adicionar</button>
+    <div id="empty_form_experiencia" style="display:none">
+      <hr>
+      <div class="row">
+        <div class="col-md-6 col-12">
+          Organização *
+          {{ formset.empty_form.empresa }}
+        </div>
+        <div class="col-md-6 col-12">
+          Área de Atuação *
+          {{ formset.empty_form.atuacao }}
+        </div>
+      </div>
+      <br class="d-none d-lg-block">
+      <div class="row">
+        <div class="col-md-6 col-12">
+          Cargo *
+          {{ formset.empty_form.cargo_exp }}
+        </div>
+        <div class="col-md-6 col-12">
+          Atividades *
+          {{ formset.empty_form.atividades_exp }}
+        </div>
+      </div>
+      <br class="d-none d-lg-block">
+      <div class="row">
+        <div class="col-md-6 col-12">
+          Data de Entrada *
+          {{ formset.empty_form.data_entrada }}
+        </div>
+        <div class="col-md-6 col-12">
+          Data de Saída <a class="text-muted" style="font-size: smaller;"> (em caso de ainda estar em atuação, deixar em branco)</a>
+          {{ formset.empty_form.data_saida }}
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+    </div>
+    <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+  </div>
+
+</form>
+
+{% else %}
+
+<form class="my-0" method="post" action="" id="formExperiencia">
+{% csrf_token %}
+
+<div class="modal-header d-flex justify-content-center">
+  <h3>Experiências Profissionais</h3>
+</div>
+
+<div class="modal-body" id="form_experiencia">
+  <div id="form_experiencia">
+    {% for item in validate %}
+    {{ forloop.counter }}. 
+    <div class="row">
+      <div class="col-md-6 col-12">
+        Organização *
+        <input value="{{ item.empresa }}" class="form-control" readonly>
+      </div>
+
+      <div class="col-md-6 col-12">
+        Área de Atuação *
+        <input value="{{ item.atuacao }}" class="form-control" readonly>
+      </div>
+    </div>
+    
+    <!--alterado no dia 22/10/2020-->
+    <br class="d-none d-lg-block">
+
+    <div class="row">
+      <div class="col-md-6 col-12">
+        Cargo *
+        <textarea class="form-control" readonly>{{ item.cargo_exp }}</textarea>
+      </div>
+
+      <div class="col-md-6 col-12">
+        Atividades *
+        <textarea class="form-control" readonly>{{ item.atividades_exp }}</textarea>
+      </div>
+    </div>
+    <!--alterado no dia 22/10/2020-->
+
+    <br class="d-none d-lg-block">
+
+    <div class="row">
+      <div class="col-md-6 col-12">
+        Data de Entrada *
+        <input value="{{ item.data_entrada|date:"SHORT_DATE_FORMAT" }}" class="form-control" readonly>
+      </div>
+
+      <div class="col-md-6 col-12">
+        Data de Saída 
+        {% if item.data_saida == NULL or item.data_saida|date:"SHORT_DATE_FORMAT" == '01/01/1900' %}
+        <input value="----------" class="form-control" readonly>
+        {% else %}
+        <input value="{{ item.data_saida|date:"SHORT_DATE_FORMAT" }}" class="form-control" readonly>
+        {% endif %}
+      </div>
+    </div>
+    <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+
+    <br>
+    <div class="col d-flex justify-content-center align-items-end mb-1">
+      {% include '../modals/deletar_experiencia_profissional.html' %}
+      <a href="{% url 'deletar_experiencia' item.id|conversor %}" class="confirm-delete-experiencia btn btn-danger text-white"
+      title="Delete" data-toggle="modal" data-target="#confirmDeleteModalExperiencia" id="{{item.id|conversor}}">Excluir</a>
+    </div>
+    <br>
+    
+    {% endfor %}
+    {{ formset.management_form }}
+    <div class="form-group{% if field.errors %} invalid {% endif %}" style="display:none">
+      {% for form in formset %}
+      {{form.non_field_errors}}
+      {{form.errors}}
+      <div class="row">
+        <div class="col-md-6 col-12">
+          Organização * 
+          {{ form.empresa }}
+        </div>
+        <div class="col-md-6 col-12">
+          Área de Atuação * 
+          {{ form.atuacao }}
+        </div>
+      </div>
+      <br class="d-none d-lg-block">
+      <div class="row">
+        <div class="col-md-6 col-12">
+          Cargo * 
+          {{ form.cargo_exp }}
+        </div>
+        <div class="col-md-6 col-12">
+          Atividades * 
+          {{ form.atividades_exp }}
+        </div>
+      </div>
+      <br class="d-none d-lg-block">
+      <div class="row">
+        <div class="col-md-6 col-12">
+          Data de Entrada *
+          {{ form.data_entrada }}
+        </div>
+        <div class="col-md-6 col-12">
+          Data de Saída <a class="text-muted" style="font-size: smaller;"> (em caso de ainda estar em atuação, deixar em branco)</a>
+          {{ form.data_saida }}
+        </div>
+      </div>
+      {% endfor %}
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer mt-5">
+  <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+  <button type="button" class="btn btn-dark text-white confirm-save-experiencia" id="add_form_experiencia">Adicionar</button>
+  <div id="empty_form_experiencia" style="display:none">
+    <hr>
+    <div class="row">
+      <div class="col-md-6 col-12">
+        Organização * 
+        {{ formset.empty_form.empresa }}
+      </div>
+      <div class="col-md-6 col-12">
+        Área de Atuação * 
+        {{ formset.empty_form.atuacao }}
+      </div>
+    </div>
+    <br class="d-none d-lg-block">
+    <div class="row">
+      <div class="col-md-6 col-12">
+        Cargo * 
+        {{ formset.empty_form.cargo_exp }}
+      </div>
+      <div class="col-md-6 col-12">
+        Atividades *
+        {{ formset.empty_form.atividades_exp }}
+      </div>
+    </div>
+    <br class="d-none d-lg-block">
+    <div class="row">
+      <div class="col-md-6 col-12">
+        Data de Entrada *
+        {{ formset.empty_form.data_entrada }}
+      </div>
+      <div class="col-md-6 col-12">
+        Data de Saída <a class="text-muted" style="font-size: smaller;"> (em caso de ainda estar em atuação, deixar em branco)</a>
+        {{ formset.empty_form.data_saida }}
+      </div>
+    </div>
+    <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+  </div>
+  <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+</div>
+
+</form>
+
+{% endif %}
+
+{% include 'base/assets/java/java.html' %}

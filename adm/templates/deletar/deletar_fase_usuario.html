@@ -1,0 +1,18 @@
+<!-- Modal Del Fase -->
+<div class="modal fade" id="DelFaseUsuario" tabindex="-1" role="dialog" aria-labelledby="DelFaseUsuario" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" action="" id="formDeleteFaseUsuario">
+                {% csrf_token %}
+                <div class="modal-body d-flex justify-content-center">
+                    <p><b id="userfase"></b>Excluir fase? </p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center align-self-center text-center">
+                    <button type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn" type="submit" id="confirmDeleteButtonModalFaseUsuario">Excluir</button>
+                </div> 
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal -->

@@ -1,0 +1,276 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load chartkick %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'adm/assets/css/modal.css' %}?{% now 'U' %}" type="text/css" />
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Início</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Bem-vindo -->
+			<section id="banner">
+				<div class="content">
+					<header>
+						<h2>Bem-vindo(a), {{ request.user }}</h2>
+					</header>
+
+					<p>Ao lado você pode acompanhar a evolução de cadastros de nossos usuários. Separado por mês/ano conseguimos 
+						ver o total de cadastros dentro de nosso banco de dados. Para acompanhar mais informações como essa acesse
+						os paineis do Google Analytics clicando 
+						<a target="_blank" href="https://analytics.google.com/analytics/web/#/p273538774/reports/defaulthome">aqui</a>
+					</p>
+				</div>
+				<span class="image object">
+					<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+					<script src="http://code.highcharts.com/highcharts.js"></script>
+					<script src="{% static 'adm/assets/js/chartkick.js' %}"></script>
+					{% pie_chart data with height='400px' %}
+				</span>
+			</section>
+			<!-- Fim Bem-vindo -->
+
+			<!-- Inicio Vagas Cadastradas -->
+			<section>
+				<header class="major">
+					<h2 id="table-vagas">Vagas</h2>
+				</header>
+				<div class="hidden">{% include 'deletar/deletar_vaga.html' %}</div>
+				<div class="hidden">{% include 'update/update_vaga_status.html' %}</div>
+				<div class="hidden">{% include 'update/update_vaga_vencimento.html' %}</div>
+				<div class="hidden">{% include 'update/update_vaga_duplicar.html' %}</div>
+				
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Cargo</th>
+							<th scope="col">Setor</th>
+							<th scope="col">Região</th>
+							<th style="text-align: center;" scope="col">Vencimento</th>
+							<th style="text-align: center;" scope="col">Status</th>
+							<th style="text-align: center;" scope="col">Duplicar</th>
+							<th style="text-align: center;" scope="col">Excluir</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in vagas %}
+							<tr>
+								<td>{{i.codigo_vaga}}</td>
+								<td><a href="{% url 'alterar_vaga' i.id %}">{{i.cargo}}</a></td>
+								<td>{{i.setor}}</td>
+								<td>{{i.regiao}}</td>								
+								<td style="text-align: center;"><a style="color: green !important" href="{% url 'vencimento_vaga' i.id %}" class="confirm-vencimento-vaga btn btn-danger text-white" title="Alterar vencimento da vaga {{i.cargo}} - {{i.setor}}" data-toggle="modal" data-target="#confirmVencimentoModalVaga" id="{{i.id}}">{{i.data_validade|date:"SHORT_DATE_FORMAT"}}</a></td>
+								{% if i.status_vaga %}
+									<td style="text-align: center;"><a href="{% url 'update_vaga' i.id %}" class="confirm-update-vaga btn btn-danger text-white" title="Desativar vaga {{i.cargo}} - {{i.setor}}" data-toggle="modal" data-target="#confirmUpdateModalVaga" id="{{i.id}}"><i class="fas fa-power-off" style="color: green"></i></a></td>
+								{% else %}
+									<td style="text-align: center;"><a href="{% url 'update_vaga' i.id %}" class="confirm-update-vaga btn btn-danger text-white" title="Ativar vaga {{i.cargo}} - {{i.setor}}" data-toggle="modal" data-target="#confirmUpdateModalVaga" id="{{i.id}}"><i class="fas fa-power-off" style="color: red"></i></a></td>
+								{% endif %}
+								<td style="text-align: center;"><a href="{% url 'duplicate_vaga' i.id %}" class="confirm-duplicate-vaga btn btn-danger text-white" title="Duplicar vaga {{i.cargo}} - {{i.setor}}" data-toggle="modal" data-target="#confirmDuplicateVaga" id="{{i.id}}"><i class="fas fa-plus" style="color: green"></i></a></td>
+								<td style="text-align: center;"><a href="{% url 'deletar_vaga' i.id %}" class="confirm-delete-vaga btn btn-danger text-white" title="Excluir vaga {{i.cargo}} - {{i.setor}}" data-toggle="modal" data-target="#confirmDeleteModalVaga" id="{{i.id}}"><i class="fas fa-trash-alt" style="color: green"></i></a></td>
+							</tr>
+						{% endfor %}
+
+						{% if vagas.has_other_pages %}
+							<ul class="pagination">
+								{% if vagas.has_previous %}
+									<li><a href="?vaga-page={{ vagas.previous_page_number }}#table-vagas">&laquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in vagas.paginator.page_range %}
+									{% if vagas.number == i %}
+										<li style="border-bottom: 1px solid;" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+									{% else %}
+										<li><a href="?vaga-page={{ i }}#table-vagas">{{ i }}</a></li>
+									{% endif %}
+								{% endfor %}
+								{% if vagas.has_next %}
+									<li><a href="?vaga-page={{ vagas.next_page_number }}#table-vagas">&raquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+						{% endif %}
+					</tbody>
+				</table>
+			</section>
+			<!-- Fim Vagas Cadastradas -->
+
+
+			<!-- Inicio Fases Cadastrados -->
+			<section>
+				<header class="major">
+					<h2 id="table-fases">Fases</h2>
+				</header>
+				<div class="hidden">{% include 'deletar/deletar_fase.html' %}</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Fase</th>
+							<th scope="col">Descrição</th>
+							<th style="text-align: center;" scope="col">Excluir</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in fases %}
+							<tr>
+								<td>{{i.id}}</td>
+								<td>{{i.fase}}</td>
+								<td>{{i.descricao_fase}}</td>
+								<td style="text-align: center;"><a href="{% url 'deletar_fase' i.id %}" class="confirm-delete-fase btn btn-danger text-white" title="Excluir fase {{i.fase}}" data-toggle="modal" data-target="#confirmDeleteModalFase" id="{{i.id}}"><i class="fas fa-trash-alt" style="color: green"></i></a></td>
+							</tr>
+						{% endfor %}
+
+						{% if fases.has_other_pages %}
+							<ul class="pagination">
+								{% if fases.has_previous %}
+									<li><a href="?fases-page={{ fases.previous_page_number }}#table-fases">&laquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in fases.paginator.page_range %}
+									{% if fases.number == i %}
+										<li style="border-bottom: 1px solid;" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+									{% else %}
+										<li><a href="?fases-page={{ i }}#table-fases">{{ i }}</a></li>
+									{% endif %}
+								{% endfor %}
+								{% if fases.has_next %}
+									<li><a href="?fases-page={{ fases.next_page_number }}#table-fases">&raquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+						{% endif %}
+					</tbody>
+				</table>
+			</section>
+			<!-- Fim Fases Cadastrados -->
+
+
+			<!-- Inicio Setores Cadastrados -->
+			<section>
+				<header class="major">
+					<h2 id="table-setores">Setores</h2>
+				</header>
+				<div class="hidden">{% include 'deletar/deletar_setor.html' %}</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Setor</th>
+							<th scope="col">Descrição</th>
+							<th style="text-align: center;" scope="col">Excluir</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in setores %}
+							<tr>
+								<td>{{i.id}}</td>
+								<td>{{i.nome_setor}}</td>
+								<td>{{i.descricao_setor|default_if_none:""}}</td>								
+								<td style="text-align: center;"><a href="{% url 'deletar_setor' i.id %}" class="confirm-delete-setor btn btn-danger text-white" title="Excluir setor {{i.nome_setor}}" data-toggle="modal" data-target="#confirmDeleteModalSetor" id="{{i.id}}"><i class="fas fa-trash-alt" style="color: green"></i></a></td>
+							</tr>
+						{% endfor %}
+
+						{% if setores.has_other_pages %}
+							<ul class="pagination">
+								{% if setores.has_previous %}
+									<li><a href="?setores-page={{ setores.previous_page_number }}#table-setores">&laquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in setores.paginator.page_range %}
+									{% if setores.number == i %}
+										<li style="border-bottom: 1px solid;" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+									{% else %}
+										<li><a href="?setores-page={{ i }}#table-setores">{{ i }}</a></li>
+									{% endif %}
+								{% endfor %}
+								{% if setores.has_next %}
+									<li><a href="?setores-page={{ setores.next_page_number }}#table-setores">&raquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+						{% endif %}
+					</tbody>
+				</table>
+			</section>
+			<!-- Fim Setores Cadastrados -->
+
+
+			<!-- Inicio Cargos Cadastrados -->
+			<section>
+				<header class="major">
+					<h2 id="table-cargos">Cargos</h2>
+				</header>
+				<div class="hidden">{% include 'deletar/deletar_cargo.html' %}</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Cargo</th>
+							<th scope="col">Descrição</th>
+							<th style="text-align: center;" scope="col">Excluir</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in cargos %}
+							<tr>
+								<td>{{i.id}}</td>
+								<td>{{i.nome_cargo}}</td>
+								<td>{{i.descricao_cargo|default_if_none:""}}</td>
+								<td style="text-align: center;"><a href="{% url 'deletar_cargo' i.id %}" class="confirm-delete-cargo btn btn-danger text-white" title="Excluir cargo {{i.nome_cargo}}" data-toggle="modal" data-target="#confirmDeleteModalCargo" id="{{i.id}}"><i class="fas fa-trash-alt" style="color: green"></i></a></td>
+							</tr>
+						{% endfor %}
+
+						{% if cargos.has_other_pages %}
+							<ul class="pagination">
+								{% if cargos.has_previous %}
+									<li><a href="?cargos-page={{ cargos.previous_page_number }}#table-cargos">&laquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in cargos.paginator.page_range %}
+									{% if cargos.number == i %}
+										<li style="border-bottom: 1px solid;" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+									{% else %}
+										<li><a href="?cargos-page={{ i }}#table-cargos">{{ i }}</a></li>
+									{% endif %}
+								{% endfor %}
+								{% if cargos.has_next %}
+									<li><a href="?cargos-page={{ cargos.next_page_number }}#table-cargos">&raquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+						{% endif %}
+					</tbody>
+				</table>
+			</section>
+			<!-- Fim Cargos Cadastrados -->
+
+
+		</div>
+	</div>
+
+	{% include 'menu.html' %}
+	{% include 'adm/assets/js/main.html' %}
+	
+</div>
+{% endblock content %}

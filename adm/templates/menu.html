@@ -1,0 +1,63 @@
+{% load static %}
+<div id="sidebar">
+	<div class="inner">
+
+		<!-- Inicio Logo -->
+		<div class="d-flex justify-content-start align-items-center" style="padding: 0 0 0 0">
+			<p style="font-size: 15px; color: #000;">
+				Colorado Máquinas
+				<img class="img-fluid" style="margin-bottom: -2%" src="{% static 'base/images/logo00.png' %}"
+					width="130">
+			</p>
+		</div>
+		<!-- Fim Logo -->
+
+		<!-- Inicio Menu -->
+		<nav id="menu">
+			<header class="major">
+				<h2>Menu</h2>
+			</header>
+			<ul>
+				<li><a href="{% url 'administracao' %}">Início</a></li>
+				<li><a href="{% url 'candidatos' %}">Candidatos</a></li>
+				<li><a href="{% url 'fases' %}">Fases Do Processo</a></li>
+				<li><a href="{% url 'documentos' %}">Documentos</a></li>
+				<li><a href="{% url 'questionarios' %}">Questionários</a></li>
+				<li>
+					<span class="opener">Requisições</span>
+					<ul>
+						<li><a href="{% url 'cadastrar_requisicao' %}">Cadastrar</a></li>
+						<li><a href="{% url 'aprovacoes' %}">Aprovar</a></li>
+						<li><a href="{% url 'requisicoes' %}">Visualizar</a></li>
+					</ul>
+				</li>
+				<li>
+					<span class="opener">Banco de Dados</span>
+					<ul>
+						<li><a href="{% url 'curriculos' %}">Curriculos</a></li>
+						<li><a href="{% url 'contas' %}">Contas</a></li>
+					</ul>
+				</li>
+				<li>
+					<span class="opener">Cadastrar</span>
+					<ul>
+						<li><a href="{% url 'cadastrar_vagas' %}">Vagas</a></li>
+						<li><a href="{% url 'cadastrar_cargos' %}">Cargos</a></li>
+						<li><a href="{% url 'cadastrar_setores' %}">Setores</a></li>
+						<li><a href="{% url 'cadastrar_fases' %}">Fases</a></li>
+					</ul>
+				</li>
+				<li><a href="{% url 'sair' %}">Sair</a></li>
+			</ul>
+		</nav>
+		<!-- Fim Menu -->
+
+		<!-- Inicio Footer -->
+		<footer id="footer">
+			<p class="copyright mb-1">&copy; Colorado Comércio de Máquinas Agrícolas - 2021</p>
+			<p class="copyright">Sistema de Recrutamento e Seleção</p>
+		</footer>
+		<!-- Fim Footer -->
+
+	</div>
+</div>

@@ -1,0 +1,37 @@
+<form method="post" action="" class="my-0">
+    {% csrf_token %}
+  
+   <div class="modal-header d-flex justify-content-center">
+      <h3 class="modal-title">Contate-nos</h3>
+    </div>
+
+    <div class="modal-body">
+        <p>* Este email deve ser enviado apenas em caso de dúvidas e/ou dificuldades relacionadas ao cadastro de contas, curriculos e vagas em nosso 
+        sistema.</p>
+        <br>
+        <div class="mb-2">
+            <input class="form-control" type="text" name="from_name" required id="id_from_name" placeholder="Nome">
+        </div>
+        <div class="mb-2">
+            <input class="form-control" type="text" name="from_email" required id="id_from_email" placeholder="Email">
+        </div>
+        <div class="mb-2">
+            <input class="form-control" type="text" name="from_telefone" id="id_from_telefone" placeholder="Telefone">
+        </div>
+        <div class="mb-2">
+            <input class="form-control" type="text" name="subject" required id="id_subject" placeholder="Assunto">
+        </div>
+        <div class="mb-3">
+            <textarea class="form-control" type="text" name="message" required id="id_message" placeholder="Menssagem"></textarea>
+        </div>
+    </div>
+
+    
+    <div class="modal-footer">
+        <a class="btn btn-secondary text-white d-flex align-items-center" style="height: 41.8px;" href="{{request.META.HTTP_REFERER|escape}}">Fechar</a>
+        <button type="submit" class="btn btn-success text-white" id="submitButton">Enviar</button>
+    </div>
+
+</form>
+
+{% include 'base/assets/java/java.html' %}

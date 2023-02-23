@@ -1,0 +1,186 @@
+{% load static %}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{% static 'modal/js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script type="text/javascript" src="{% static 'modal/js/jquery.bootstrap.modal.forms.min.js' %}"></script>
+
+
+<!--DELETAR VAGA-->
+<script>
+	$(document).on('click', '.confirm-delete-vaga', function () {
+	$("#confirmDeleteModalVaga").attr("caller-id", $(this).attr("id"));
+	$("#vagadel_id").html($(this).attr("title"));
+	$("#formDeleteVaga").attr("action", "/administracao/deletar/vaga/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmDeleteButtonModalVaga', function () {
+	var caller = $("#confirmDeleteButtonModalVaga").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--DELETAR VAGA-->
+
+
+<!--DELETAR SETOR-->
+<script>
+	$(document).on('click', '.confirm-delete-setor', function () {
+	$("#confirmDeleteModalSetor").attr("caller-id", $(this).attr("id"));
+	$("#setordel_id").html($(this).attr("title"));
+	$("#formDeleteSetor").attr("action", "/administracao/deletar/setor/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmDeleteButtonModalSetor', function () {
+	var caller = $("#confirmDeleteButtonModalSetor").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--DELETAR SETOR-->
+
+
+<!--DELETAR CARGO-->
+<script>
+	$(document).on('click', '.confirm-delete-cargo', function () {
+	$("#confirmDeleteModalCargo").attr("caller-id", $(this).attr("id"));
+	$("#cargodel_id").html($(this).attr("title"));
+	$("#formDeleteCargo").attr("action", "/administracao/deletar/cargo/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmDeleteButtonModalCargo', function () {
+	var caller = $("#confirmDeleteButtonModalCargo").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--DELETAR CARGO-->
+
+
+<!--DELETAR FASE-->
+<script>
+	$(document).on('click', '.confirm-delete-fase', function () {
+	$("#confirmDeleteModalFase").attr("caller-id", $(this).attr("id"));
+	$("#fasedel_id").html($(this).attr("title"));
+	$("#formDeleteFase").attr("action", "/administracao/deletar/fase/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmDeleteButtonModalFase', function () {
+	var caller = $("#confirmDeleteButtonModalFase").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--DELETAR FASE-->
+
+
+<!--DELETAR DE FASE USUARIO-->
+<script>
+	$(document).on('click', '.del-fase-usuario', function () {
+	$("#DelFaseUsuario").attr("caller-id", $(this).attr("id"));
+	$("#faseuserdel_id").html($(this).attr("title"));
+	$("#formDeleteFaseUsuario").attr("action", "/administracao/deletar/fase_usuario/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmDeleteButtonModalFaseUsuario', function () {
+	var caller = $("#confirmDeleteButtonModalFaseUsuario").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--DELETAR DE FASE USUARIO-->
+
+
+<!--UPDATE VAGA STATUS-->
+<script>
+	$(document).on('click', '.confirm-update-vaga', function () {
+	$("#confirmUpdateModalVaga").attr("caller-id", $(this).attr("id"));
+	$("#vagaupd_id").html($(this).attr("title"));
+	$("#formUpdateVaga").attr("action", "/administracao/update/vaga/status/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmUpdateButtonModalVaga', function () {
+	var caller = $("#confirmUpdateButtonModalVaga").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--UPDATE VAGA STATUS-->
+
+
+<!--UPDATE VAGA VENCIMENTO-->
+<script>
+	$(document).on('click', '.confirm-vencimento-vaga', function () {
+	$("#confirmVencimentoModalVaga").attr("caller-id", $(this).attr("id"));
+	$("#vagavenc_id").html($(this).attr("title"));
+	$("#formVencimentoVaga").attr("action", "/administracao/update/vaga/vencimento/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmVencimentoButtonModalVaga', function () {
+	var caller = $("#confirmVencimentoButtonModalVaga").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--UPDATE VAGA VENCIMENTO-->
+
+
+<!--DUPLICAÇÃO DE VAGA-->
+<script>
+	$(document).on('click', '.confirm-duplicate-vaga', function () {
+	$("#confirmDuplicateVaga").attr("caller-id", $(this).attr("id"));
+	$("#vagadup_id").html($(this).attr("title"));
+	$("#formDuplicateVaga").attr("action", "/administracao/duplicar/vaga/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmDuplicateVagaButton', function () {
+	var caller = $("#confirmDuplicateVagaButton").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--DUPLICAÇÃO DE VAGA-->
+
+
+<!--CADASTRO DE FASE DE VAGA/USUARIO-->
+<script>
+	$(document).on('click', '.confirm-cadastrar-fase', function () {
+	$("#confirmCadastroFaseModal").attr("caller-id", $(this).attr("id"));
+	$("#fase_id").html($(this).attr("title"));
+	$("#id_vaga_usuario").val($(this).attr("id"));
+	$("#formCadastroFase").attr("action", "/administracao/cadastrar/fases_usuario/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmarCadastroFaseButton', function () {
+	var caller = $("#confirmarCadastroFaseButton").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--CADASTRO DE FASE DE VAGA/USUARIO-->
+
+
+<!--CADASTRO DE FASE DE VAGA/USUARIO-->
+<script>
+	$(document).on('click', '.confirm-update-vagausuario', function () {
+	$("#confirmUpdateVagaUsuario").attr("caller-id", $(this).attr("id"));
+	/*$("#fase_id").html($(this).attr("title"));
+	$("#id_vaga_usuario").val($(this).attr("id"));*/
+	$("#formUpdateVagaUsuario").attr("action", "/administracao/update/vagausuario/".concat($(this).attr("id")));
+	});
+
+	$(document).on('click', '#confirmUpdateVagaUsuarioButton', function () {
+	var caller = $("#confirmUpdateVagaUsuarioButton").closest(".modal").attr("caller-id");
+	window.location = $("#".concat(caller)).attr("href");
+	});
+</script>
+<!--CADASTRO DE FASE DE VAGA/USUARIO-->
+
+
+<script>
+	$(document).on('click', '.add-fase-usuario', function () {
+	$("#userfase").html($(this).attr("title"));
+	$("#id_userfase").val($(this).attr("user"));
+	$("#id_vagafase").val($(this).attr("vaga"));
+	});
+</script>

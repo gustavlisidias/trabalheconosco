@@ -1,0 +1,151 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load chartkick %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'adm/assets/css/candidatos.css' %}?{% now 'U' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'adm/assets/css/modal.css' %}?{% now 'U' %}" type="text/css" />
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Fases - Usuários</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Contas -->
+			<section>
+				<form method="GET" action="" id="searchform">
+					<div class="d-flex flex-row justify-content-end">
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxq" name="q" type="text" value="{{ request.GET.q }}" placeholder="Usuário" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<input class="searchfield" list="fasevaga" autocomplete="off" id="searchboxp" name="p" type="text" value="{{ request.GET.p }}" placeholder="Vaga" style="border-radius: 5px;">
+							<datalist id="fasevaga">
+								{% for i in vagas %}
+									<option value="{{ i }}"></option>
+								{% endfor %}
+							</datalist>
+						</div>
+						<div class="p-2">
+							<input class="searchfield" list="fasefase" autocomplete="off" id="searchboxr" name="r" type="text" value="{{ request.GET.r }}" placeholder="Fase" style="border-radius: 5px;">
+							<datalist id="fasefase">
+								{% for o in fasenames %}
+									<option value="{{ o.fase }}"/>
+								{% endfor %}
+							</datalist>
+						</div>
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxs" name="s" type="date" value="{{ request.GET.s }}" placeholder="Data Inicial" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxt" name="t" type="date" value="{{ request.GET.t }}" placeholder="Data Final" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+				</form>
+				<header class="major">
+					<h2>Fases dos Processos</h2>
+				</header>
+
+				<!-- Modal Add Fase -->
+				<div class="modal fade" id="AddFaseUsuario" tabindex="-1" role="dialog" aria-labelledby="AddFaseUsuario" style="display: none;" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<form method="POST" action="">
+								{% csrf_token %}
+								<div class="modal-body d-flex justify-content-center">
+									<p>								
+										<b id="userfase"></b>
+										<input type="text" name="id_userfase" id="id_userfase" style="display: none">
+										<input type="text" name="id_vagafase" id="id_vagafase" style="display: none">
+										<input style="margin-bottom: 1rem" type="text" list="fasenames" autocomplete="off" name="fase" id="fase" placeholder="Fase">
+										<datalist id="fasenames">
+											{% for o in fasenames %}
+												<option value="{{ o.fase }}"/>
+											{% endfor %}
+										</datalist>
+										<textarea name="observacao" id="observacao" placeholder="Observações" rows="4"cols="50"></textarea>
+									</p>
+								</div>
+								<div class="modal-footer d-flex justify-content-center align-self-center text-center">
+									<button type="button" class="mr-2" data-dismiss="modal">Cancelar</button>
+									<button type="submit">Salvar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- Modal -->
+
+				<div class="hidden">{% include 'deletar/deletar_fase_usuario.html' %}</div>
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Usuário</th>
+							<th scope="col">Vaga</th>
+							<th scope="col">Fase</th>
+							<th scope="col">Observações</th>
+							<th scope="col">Cadastro</th>
+						</tr>
+					</thead>
+					<tbody>
+						<form method="POST" action="" target="_blank">
+							{% csrf_token %}
+							{% for i in fases %}
+								<tr>
+									<td>{{i.usuario|title}}</td>
+									<td>{{i.vaga}}</td>
+									<td>{{i.fase}}</td>
+									<td>{{i.observacao|safe|truncatechars:124 }}</td>
+									<td>{{i.data_cadastro|date:"SHORT_DATE_FORMAT"}}</td>	
+									<td style="color:green"><button style="box-shadow: none; padding: 0 0 0;" type="button" data-toggle="modal" class="add-fase-usuario" title="Adicionar fase para {{i.usuario}}" data-target="#AddFaseUsuario" id="{{i.id}}" vaga="{{i.vaga.id}}" user="{{i.usuario.id}}"><i class="fas fa-plus fa-lg"></i></button></td>
+									<td style="color:green"><button style="box-shadow: none; padding: 0 0 0;" title="Notificar fase" type="submit" value="{{i.id}}" id="{{i.id}}" name="notificacao_id" class="btn"><i class="fab fa-whatsapp fa-lg"></i></button></td>
+									<td style="color:green"><a title="Editar {{i.usuario}} - {{i.fase}}" href="/administracao/update/faseusuario/{{ i.id }}"><i class="fas fa-pen-square"></i></a></td>	
+									<td style="color:green"><button style="box-shadow: none; padding: 0 0 0;" type="button" data-toggle="modal" class="del-fase-usuario" title="Excluir fase para {{i.usuario}}" data-target="#DelFaseUsuario" id="{{i.id}}" vaga="{{i.vaga.id}}" user="{{i.usuario.id}}"><i class="fas fa-trash-alt fa-lg"></i></button></td>
+								</tr>
+							{% endfor %}
+						</form>
+					</tbody>
+				</table>
+			</section>
+			<!-- Fim Contas -->
+
+		</div>
+	</div>
+
+	<style>
+		[type="date"] {
+			background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
+			height: 2.75em;
+			border: solid 1px rgba(210, 215, 217, 0.75);
+			padding-left: 0.75em;
+			border-radius: 5px;
+		}
+	
+		[type="date"]::-webkit-inner-spin-button {
+			display: none;
+		}
+	
+		[type="date"]::-webkit-calendar-picker-indicator {
+			opacity: 0;
+		}		
+	</style>
+
+	{% include 'menu.html' %}
+	{% include 'adm/assets/js/main.html' %}
+	
+</div>
+{% endblock content %}

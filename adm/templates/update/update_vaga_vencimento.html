@@ -1,0 +1,36 @@
+<div class="modal fade" id="confirmVencimentoModalVaga" tabindex="-1" caller-id="" role="dialog" aria-labelledby="confirmVencimentoModalVaga" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" id="formVencimentoVaga" action="">
+                {% csrf_token %} 
+                <div class="modal-body d-flex justify-content-center">
+                    <p> 
+                        <b id="vagavenc_id"></b>
+                        <br><br>
+                        <input type="date" id="data_vencimento" name="data_vencimento">   
+                        <style>
+                            [type="date"] {
+                                background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
+                                height: 2.75em;
+                                border: solid 1px rgba(210, 215, 217, 0.75);
+                                border-radius: 5px;
+                            }
+                        
+                            [type="date"]::-webkit-inner-spin-button {
+                                display: none;
+                            }
+                        
+                            [type="date"]::-webkit-calendar-picker-indicator {
+                                opacity: 0;
+                            }		
+                        </style>
+                    </p>              
+                </div>
+                <div class="modal-footer d-flex justify-content-center align-self-center text-center">
+                    <button type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger" type="submit" id="confirmVencimentoButtonModalVaga">Salvar</button>
+                </div> 
+            </form>     
+        </div>
+    </div>
+</div>

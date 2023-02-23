@@ -1,0 +1,206 @@
+{% load customfilters %}
+{% if not validate %}
+<form class="my-0" method="post" action="">
+  {% csrf_token %}
+
+  <div class="modal-header d-flex justify-content-center">
+    <h3>Formações Acadêmicas</h3>
+  </div>
+
+  <div class="modal-body" id="form_formacao">
+    <div id="form_formacao">
+      {{ formset.management_form }}
+      <div class="form-group{% if field.errors %} invalid {% endif %}">
+        {% for form in formset %}
+        {{form.non_field_errors}}
+        {{form.errors}}
+        <div class=row>
+          <div class="col-md-6 col-12">
+            Nível de Escolaridade *
+            {{ form.escolaridade }}
+            {{ form.escolaridade.errors }}
+          </div>
+          <div class="col-md-6 col-12">
+            Instituição de Ensino *
+            {{ form.instituicao }}
+            {{ form.instituicao.errors }}
+          </div>
+        </div>
+        <br class="d-none d-lg-block">
+        <div class=row>
+          <div class="col-md-6 col-12">
+            Curso <a class="text-muted" style="font-size: smaller;"> (em caso de Ensino Médio, deixar em branco)</a>
+            {{ form.curso }}
+            {{ form.curso.errors }}
+          </div>
+          <div class="col-md-6 col-12">
+            Status * 
+            {{ form.status_formacao }}
+            {{ form.status_formacao.errors }}
+          </div>
+        </div>
+        {% endfor %}
+        <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer mt-5">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-dark text-white" id="add_form_formacao">Adicionar</button>
+    <div id="empty_form_formacao" style="display:none">
+      <hr>
+      <div class=row>
+        <div class="col-md-6 col-12">
+          Nível de Escolaridade * 
+          {{ formset.empty_form.escolaridade }}
+        </div>
+        <div class="col-md-6 col-12">
+          Instituição de Ensino * 
+          {{ formset.empty_form.instituicao }}
+        </div>
+      </div>
+      <br class="d-none d-lg-block">
+      <div class=row>
+        <div class="col-md-6 col-12">
+          Curso <a class="text-muted" style="font-size: smaller;"> (em caso de Ensino Médio, deixar em branco)</a>
+          {{ formset.empty_form.curso }}
+        </div>
+        <div class="col-md-6 col-12">
+          Status * 
+          {{ formset.empty_form.status_formacao }}
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+    </div>
+    <button type="submit" class="btn btn-success text-white " id="submitButton">Salvar</button>
+  </div>
+
+</form>
+
+{% else %}
+
+<form class="my-0" method="post" action="" id="formFormacao">
+  {% csrf_token %}
+
+  <div class="modal-header d-flex justify-content-center">
+    <h3>Formações Acadêmicas</h3>
+  </div>
+
+  <div class="modal-body" id="form_formacao">
+    <div id="form_formacao">
+      {% for item in validate %}
+      {{ forloop.counter }}. 
+      <div class="row">
+        <div class="col-md-6 col-12">
+          Nível de Escolaridade * 
+          <input value="{{ item.escolaridade }}" class="form-control" readonly>
+        </div>
+
+        <div class="col-md-6 col-12">
+          Instituição de Ensino *
+          <input value="{{ item.instituicao }}" class="form-control" readonly>
+        </div>
+      </div>
+
+      <br class="d-none d-lg-block">
+
+      <div class="row">
+        <div class="col-md-6 col-12">
+          Curso <a class="text-muted" style="font-size: smaller;"> (em caso de Ensino Médio, deixar em branco)</a>
+          {% if item.curso == " " or item.curso == NULL %}
+          <input value="" class="form-control" readonly>
+          {% else %}
+          <input value="{{ item.curso }}" class="form-control" readonly>
+          {% endif %}
+        </div>
+
+        <div class="col-md-6 col-12">
+          Status *
+          <input value="{{ item.status_formacao }}" class="form-control" readonly>
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+
+      <br>
+      <div class="col d-flex justify-content-center align-items-end mb-1">
+        {% include '../modals/deletar_formacao_academica.html' %}
+        <a href="{% url 'deletar_formacao' item.id|conversor %}" class="confirm-delete-formacao btn btn-danger text-white"
+        title="Delete" data-toggle="modal" data-target="#confirmDeleteModalFormacao" id="{{item.id|conversor}}">Excluir</a>
+      </div>
+      <br>
+
+      {% endfor %}
+
+      {{ formset.management_form }}
+      <div class="form-group{% if field.errors %} invalid {% endif %}" style="display:none">
+        {% for form in formset %}
+        {{form.non_field_errors}}
+        {{form.errors}}
+        <div class=row>
+          <div class="col-md-6 col-12">
+            Nível de Escolaridade *
+            {{ form.escolaridade }}
+            {{ form.escolaridade.errors }}
+          </div>
+          <div class="col-md-6 col-12">
+            Instituição de Ensino *
+            {{ form.instituicao }}
+            {{ form.instituicao.errors }}
+          </div>
+        </div>
+        <br class="d-none d-lg-block">
+        <div class=row>
+          <div class="col-md-6 col-12">
+            Curso <a class="text-muted" style="font-size: smaller;"> (em caso de Ensino Médio, deixar em branco)</a>
+            {{ form.curso }}
+            {{ form.curso.errors }}
+          </div>
+          <div class="col-md-6 col-12">
+            Status *
+            {{ form.status_formacao }}
+            {{ form.status_formacao.errors }}
+          </div>
+        </div>
+        {% endfor %}
+        <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer mt-5">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-dark text-white confirm-save-formacao" id="add_form_formacao">Adicionar</button>
+    <div id="empty_form_formacao" style="display:none">
+      <hr>
+      <div class=row>
+        <div class="col-md-6 col-12">
+          Nível de Escolaridade *
+          {{ formset.empty_form.escolaridade }}
+        </div>
+        <div class="col-md-6 col-12">
+          Instituição de Ensino *
+          {{ formset.empty_form.instituicao }}
+        </div>
+      </div>
+      <br class="d-none d-lg-block">
+      <div class=row>
+        <div class="col-md-6 col-12">
+          Curso <a class="text-muted" style="font-size: smaller;"> (em caso de Ensino Médio, deixar em branco)</a>
+          {{ formset.empty_form.curso }}
+        </div>
+        <div class="col-md-6 col-12">
+          Status *
+          {{ formset.empty_form.status_formacao }}
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+    </div>
+    <button type="submit" class="btn btn-success text-white " id="submitButton">Salvar</button>
+  </div>
+
+</form>
+
+{% endif %}
+
+{% include 'base/assets/java/java.html' %}

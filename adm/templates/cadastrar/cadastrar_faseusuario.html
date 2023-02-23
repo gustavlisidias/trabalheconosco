@@ -1,0 +1,26 @@
+<div class="modal fade" id="confirmCadastroFaseModal" tabindex="-1" caller-id="" role="dialog" aria-labelledby="confirmCadastroFaseModal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" id="formCadastroFase" action="">
+                {% csrf_token %} 
+                <div class="modal-body d-flex justify-content-center">
+                    <p> 
+                        <b id="fase_id"></b>
+                        <input type="text" name="id_vaga_usuario" id="id_vaga_usuario" style="display: none">
+                        <input style="margin-bottom: 1rem; color: #000;" type="text" list="fases" autocomplete="off" name="fase" id="fase" placeholder="Fase">
+                        <datalist id="fases">
+                            {% for i in fases %}
+                                <option value="{{ i.fase }}"/>
+                            {% endfor %}
+                        </datalist>
+                        <textarea style="color: #000;" name="observacao" id="observacao" placeholder="Observações" rows="4" cols="50"></textarea>                       
+                    </p>              
+                </div>
+                <div class="modal-footer d-flex justify-content-center align-self-center text-center">
+                    <button type="button" class="mr-2" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="adicionar_fase" id="confirmarCadastroFaseButton">Salvar</button>
+                </div> 
+            </form>     
+        </div>
+    </div>
+</div>

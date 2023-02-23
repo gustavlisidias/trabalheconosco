@@ -1,0 +1,131 @@
+{% load customfilters %}
+{% if not validate %}
+
+<form class="my-0" method="post" action="">
+  {% csrf_token %}
+
+  <div class="modal-header d-flex justify-content-center">
+    <h3>Idiomas</h3>
+  </div>
+
+  <div class="modal-body" id="form_idioma">
+    <div id="form_idioma">
+      {{ formset.management_form }}
+      <div class="form-group {% if field.errors %} invalid {% endif %}">
+        {% for form in formset %}
+        {{form.non_field_errors}}
+        {{form.errors}}
+        <div class=row>
+          <div class="col-md-6 col-12">
+            Idioma de Conhecimento *
+            {{ form.idioma }}
+          </div>
+          <div class="col-md-6 col-12">
+            Nível de Conhecimento *
+            {{ form.nivel_idioma }}
+          </div>
+        </div>
+        {% endfor %}
+        <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer mt-5">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-dark text-white" id="add_form_idioma">Adicionar</button>
+    <div id="empty_form_idioma" style="display:none">
+      <hr>
+      <div class=row>
+        <div class="col-md-6 col-12">
+          Idioma de Conhecimento *
+          {{ formset.empty_form.idioma }}
+        </div>
+        <div class="col-md-6 col-12">
+          Nível de Conhecimento *
+          {{ formset.empty_form.nivel_idioma }}
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+    </div>
+    <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+  </div>
+</form>
+
+{% else %}
+
+<form class="my-0" method="post" action="" id="formIdioma">
+  {% csrf_token %}
+
+  <div class="modal-header d-flex justify-content-center">
+    <h3>Idiomas</h3>
+  </div>
+
+  <div class="modal-body" id="formIdioma">
+    <div id="form_idioma">
+      {% for item in validate %}
+      {{ forloop.counter }}. 
+      <div class=row>
+        <div class="col-md-6 col-12">
+          Idioma de Conhecimento *
+          <input type="text" name="idioma" id="id_idioma" readonly value="{{ item.idioma }}">
+        </div>
+        <div class="col-md-5 col-12">
+          Nível de Conhecimento *
+          <input type="text" name="nivel_idioma" id="id_nivel_idioma" readonly value="{{ item.nivel_idioma }}">
+        </div>
+        <div class="col-md-1 col-12 d-flex justify-content-center align-items-end mb-1">
+          {% include '../modals/deletar_idioma.html' %}
+          <a href="{% url 'deletar_idioma' item.id|conversor %}" class="confirm-delete-idioma btn btn-danger text-white"
+          title="Delete" data-toggle="modal" data-target="#confirmDeleteModalIdioma" id="{{item.id|conversor}}">Excluir</a>
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+      
+      <br>
+
+      {% endfor %}
+      {{ formset.management_form }}
+      <div class="form-group {% if field.errors %} invalid {% endif %}" style="display:none">
+        {% for form in formset %}
+        {{form.non_field_errors}}
+        {{form.errors}}
+        <div class=row>
+          <div class="col-md-6 col-12">
+            Idioma de Conhecimento *
+            {{ form.idioma }}
+          </div>
+          <div class="col-md-6 col-12">
+            Nível de Conhecimento *
+            {{ form.nivel_idioma }}
+          </div>
+        </div>
+        {% endfor %}
+        <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer mt-5">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-dark text-white confirm-save-idioma" id="add_form_idioma">Adicionar</button>
+    <div id="empty_form_idioma" style="display:none">
+      <hr>
+      <div class=row>
+        <div class="col-md-6 col-12">
+          Idioma de Conhecimento *
+          {{ formset.empty_form.idioma }}
+        </div>
+        <div class="col-md-6 col-12">
+          Nível de Conhecimento *
+          {{ formset.empty_form.nivel_idioma }}
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+    </div>
+    <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+  </div>
+</form>
+{% endif %}
+
+{% include 'base/assets/java/java.html' %}

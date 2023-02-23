@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include '../mails/messages.html' %}
+
+<link rel="stylesheet" href="{% static 'home/assets/css/main.css' %}?{% now 'U' %}" type="text/css"/>
+
+	<body>
+		<!-- Banner -->
+        <section class="banner full">
+            <article>
+                <img src="{% static 'home/images/slide1.jpg' %}">
+                <div class="inner">
+                    <header class="inverse">
+                        <p>Colorado Máquinas</p>
+                        <h2>Trabalhe Conosco</h2>
+                    </header>
+                </div>
+            </article>
+            <article>
+                <img src="{% static 'home/images/slide2.jpg' %}">
+                <div class="inner">
+                    <header class="inverse">
+                        <p>Colorado Máquinas</p>
+                        <h2>Trabalhe Conosco</h2>
+                    </header>
+                </div>
+            </article>
+            <article>
+                <img src="{% static 'home/images/slide3.jpg' %}">
+                <div class="inner">
+                    <header class="inverse">
+                        <p>Colorado Máquinas</p>
+                        <h2>Trabalhe Conosco</h2>
+                    </header>
+                </div>
+            </article>
+            <article>
+                <img src="{% static 'home/images/slide4.jpg' %}">
+                <div class="inner">
+                    <header class="inverse">
+                        <p>Colorado Máquinas</p>
+                        <h2>Trabalhe Conosco</h2>
+                    </header>
+                </div>
+            </article>
+        </section>
+
+		<!-- Introdução -->
+        <section id="one" class="wrapper style2">
+            <!-- Mensagem -->
+            <div class="inner">
+                <div class="grid-style my-0">
+                    <div class="col-md-12 col-12 d-flex justify-content-center align-self-center text-center">
+                        <div class="box">
+                            <div class="content justify-content-center align-self-center text-center">
+                                <p style="color: black;"> Se você chegou até aqui, é porque tem interesse em fazer parte da nossa equipe.<br>
+                                    Crie sua conta e cadastre seu currículo para participar dos nossos processos seletivos. Mantenha seu perfil
+                                    atualizado para aumentar suas chances de ser selecionado!
+                                    <br>
+                                    <a href="/vagas/">Veja nossas vagas</a>
+                                </p>
+                                <hr>    
+                            </div>                                            
+                        </div>
+                    </div>                    
+                </div>             
+
+            <!-- Nossa Empresa -->
+                <div class="grid-style">
+                    <div class="col-md-12 col-12 d-flex justify-content-center align-self-center text-center">
+                        <div class="box">
+                            <div class="row content">
+                                <div class="col-md-6 col-12 text-md-left text-center justify-content-center">
+                                    <header class="align-center my-3 my-md-0">
+                                        <p>cultivando pessoas</p>
+                                        <h2>Nossa Empresa</h2>
+                                    </header>
+                                    <p class="text-md-left text-center">Integrante do Grupo Colorado,
+                                        a Colorado Máquinas é uma concessionária dos produtos John Deere,
+                                        presente no nordeste do Estado de São Paulo.
+                                        Região com uma área cultivada de aproximadamente 3 milhões de hectares.
+                                        Com sede em Ribeirão Preto, filiais em Araraquara, Barretos, Guaíra, Franca, Bebedouro,
+                                        Ituverava, Itápolis, Orlândia e Monte Alto, a Colorado Máquinas oferece tratores,
+                                        colhedoras, colheitadeiras, implementos, além de serviços de assistência técnica e
+                                        pós-vendas diferenciados, entregando a solução completa ao cliente.</p>
+                                </div>
+                                <div class="image fit col-md-6 col-12 text-md-left text-center justify-content-center">
+                                    <img  src="{% static 'home/images/image1.jpg' %}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+		<!-- Missao, Visao e Valores -->
+        <section id="two" class="wrapper style3" style="background-image: url('/static/home/images/slide1.jpg'); padding-bottom: 8%;">
+            <div class="inner">
+                <div class="row" style="text-align: center; text-transform: uppercase; font-size: .75rem; font-weight: 300; letter-spacing: .25rem;">
+                    <div class="col-md-6 col-12">
+                        <div style="text-align: center;">
+                            <h3>Visão</h3>
+                            <span>Ser a preferida em Soluções Integradas <br> para o Agronegócio</span>
+                            <hr style="width: 50%; height: 25%; margin: 3% auto">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div style="text-align: center;">
+                            <br class="responsive">
+                            <h3>Missão</h3>
+                            <span>Oferecer Soluções Integradas <br> para o Agronegócio</span>
+                            <hr style="width: 50%; height: 25%; margin: 3% auto">
+                        </div>
+                    </div>
+                </div>
+
+                <br><br>
+
+                <div style="text-align: center; text-transform: uppercase; font-size: .75rem; font-weight: 300; letter-spacing: .25rem;">
+                    <h3>Valores</h3>
+                </div>
+
+                <br>
+
+                <div class="row rowhr">
+                    <div class="col-md-1 col-12"></div>
+                    <div class="col-md-2 col-4">
+                        <span>Objetividade orientada para uma meta comum
+                            <hr class="subhr d-none d-md-block">
+                        </span>
+                        
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <span>Clareza na condução dos negócios
+                            <hr class="subhr d-none d-md-block">
+                        </span>
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <span>Dedicação aos clientes e fornecedores
+                            <hr class="subhr d-none d-md-block">
+                        </span>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <br class="responsive"><br class="responsive">
+                        <span>Responsabilidade por ações e resultados
+                            <hr class="subhr d-none d-md-block">
+                        </span>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <br class="responsive"><br class="responsive">
+                        <span>Relacionamento harmonioso
+                            <hr class="subhr d-none d-md-block">
+                        </span>
+                    </div>
+                    <div class="col-md-1 col-12"></div>
+                </div>
+            </div>
+        </section>
+
+		<!-- GPTW -->
+        <section id="one" class="wrapper style2">
+                <div class="inner">
+                    <div class="grid-style">
+                        <div class="col-md-12 col-12 d-flex justify-content-center align-self-center text-center">
+                            <div class="box">
+                                <div class="row content">
+                                    <div class="image fit col-md-6 col-12 text-md-left text-center justify-content-center">
+                                        <img  src="{% static 'home/images/image2.jpg' %}">
+                                    </div>
+                                    <div class="col-md-6 col-12 text-md-left text-center justify-content-center">
+                                        <header class="align-center my-3 my-md-0">
+                                            <p>great place to work</p>
+                                            <h2>GPTW</h2>
+                                        </header>
+                                        <p class="text-md-left text-center">O GPTW é uma certificação global que mede os melhores ambientes de trabalho. Nós da
+                                            Colorado Máquinas, pelo 3º ano consecutivo, fomos premiados! Isso é resultado de um excelente
+                                            trabalho, a partir da relação de confiança e respeito que temos com os nossos colaboradores.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- Beneficios -->
+        <section id="two" class="wrapper style3" style="background-image: url('/static/home/images/slide1.jpg'); padding-bottom: 8%;">
+            <div class="inner">
+                <h3 style="text-align: center; text-transform: uppercase; font-weight: 300; letter-spacing: .25rem;">Nossos Benefícios</h3>
+
+                <br>
+
+                <div class="row" style="margin-bottom: 5%; text-align: center; text-transform: uppercase; font-size: .75rem; font-weight: 300; letter-spacing: .25rem;">
+                    <div class="col-md-3 col-6">
+                        <span>Prog. de Participação <br> nos Resultados</span>
+                        <hr style="width: 50%; height: 25% ;margin: auto; ">
+                    </div>
+
+                    <div class="col-md-2 col-6">
+                        <span>Plano <br> de Carreira</span>
+                        <hr style="width: 50%; height: 25% ;margin: auto;">
+                    </div>
+
+                    <div class="col-md-2 col-6">
+                        <br class="responsive"><br class="responsive">
+                        <span>Seguro <br> de Vida</span>
+                        <hr style="width: 50%; height: 25% ;margin: auto;">
+                    </div>
+
+                    <div class="col-md-2 col-6">
+                        <br class="responsive"><br class="responsive">
+                        <span>Vale <br> Transporte</span>
+                        <hr style="width: 50%; height: 25% ;margin: auto;">
+                    </div>
+
+                    <div class="col-md-3 col-12">
+                        <br class="responsive"><br class="responsive">
+                        <span>Vale Refeição ou <br> Alimentação</span>
+                        <hr style="width: 50%; height: 25% ;margin: auto;">
+                    </div>
+                </div>
+                <div class="row" style="text-align: center; text-transform: uppercase; font-size: .75rem; font-weight: 300; letter-spacing: .25rem;">
+                    <div class="col-md-3 col-6">
+                        <br class="responsive"><br class="responsive">
+                        <span>Cestas <br> de Fim de Ano</span>
+                        <hr style="width: 50%; height: 25% ;margin: auto;">
+                    </div>
+
+                    <div class="col-md-3 col-6">
+                        <br class="responsive"><br class="responsive">
+                        <span>Assistência <br> Odontológica</span>
+                        <hr style="width: 50%; height: 25% ;margin: auto;">
+                    </div>
+
+                    <div class="col-md-3 col-6">
+                        <br class="responsive"><br class="responsive">
+                        <span>Assistência <br> Médica</span>
+                        <hr style="width: 50%; height: 25% ;margin: auto;">
+                    </div>
+
+                    <div class="col-md-3 col-6">
+                        <br class="responsive"><br class="responsive">
+                        <span>Bolsa <br> Estudos</span>
+                        <hr style="width: 50%; height: 25% ;margin: auto;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video -->
+        <section id="one" class="wrapper style2">
+            <div class="inner">
+                <div class="grid-style">
+                    <div class="col-md-12 col-12 d-flex justify-content-center align-self-center text-center">
+                        <div class="box" style="width: 105%; height: 200%">
+                            <div class="row content">
+                                <div class="col-md-12 col-12 text-md-center text-center justify-content-center">
+                                    <header class="align-center my-3 my-md-0">
+                                        <p>conheça mais sobre a Colorado Máquinas</p>
+                                        <h2>Assista ao nosso vídeo institucional</h2>
+                                    </header>
+                                </div>  
+                                </p><div class="image fit col-md- col-12 text-md-center text-center justify-content-center">
+                                    <iframe class="imghr bd-placeholder-img-lg featurette-image img-fluid text-md-center text-center imagem-home justify-content-center" src="https://www.youtube.com/embed/iurdzdTVazQ" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- modal -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+
+		<!-- Scripts -->
+        <script src="{% static 'home/assets/js/jquery.min.js' %}"></script>
+        <script src="{% static 'home/assets/js/jquery.scrollex.min.js' %}"></script>
+        <script src="{% static 'home/assets/js/skel.min.js' %}"></script>
+        <script src="{% static 'home/assets/js/util.js' %}"></script>
+        <script src="{% static 'home/assets/js/main.js' %}"></script>
+    </body>
+{% endblock content %}

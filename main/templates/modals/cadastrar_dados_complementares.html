@@ -1,0 +1,214 @@
+{% if not validate %}
+<form class="my-0" method="post" action="">
+  {% csrf_token %}
+
+ <div class="modal-header d-flex justify-content-center">
+    <h3>Dados Complementares</h3>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group {% if field.errors %} invalid {% endif %}">
+      {{form.non_field_errors}}
+      {{form.errors}}
+      <div class="row">
+        <div class="col-md-4 col-12 justify-content-center align-self-center text-center">
+          Primeiro Emprego
+          <br>
+          {{ form.primeiro_emprego.errors }}
+          {{ form.primeiro_emprego }}
+        </div>
+        <div class="col-md-4 col-12 justify-content-center align-self-center text-center">
+          Disponível para Viagem
+          <br>
+          {{ form.disponivel_viagem.errors }}
+          {{ form.disponivel_viagem }}
+        </div>
+        <div class="col-md-4 col-12 justify-content-center align-self-center text-center">
+          Possui Deficiência
+          <br>
+          {{ form.deficiencia.errors }}
+          {{ form.deficiencia }}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-6 col-12">
+          Área de Interesse (1) *
+          {{ form.interesse1.errors }}
+          {{ form.interesse1 }}
+        </div>
+        <div class="col-md-6 col-12">
+          Área de Interesse (2) *
+          {{ form.interesse2.errors }}
+          {{ form.interesse2 }}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4 col-12">
+          Facebook
+          {{ form.facebook.errors }}
+          {{ form.facebook }}
+        </div>
+        <div class="col-md-4 col-12">
+          LinkedIn
+          {{ form.linkedin.errors }}
+          {{ form.linkedin }}
+        </div>
+        <div class="col-md-4 col-12">
+          Como nos conheceu *
+          {{ form.inspecao.errors }}
+          {{ form.inspecao }}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4 col-12">
+          Pretensão Salarial * <a class="text-muted" style="font-size: smaller;"> (apenas números)</a>
+          {{ form.pretensao.errors }}
+          {{ form.pretensao }}
+        </div>
+        <div class="col-md-4 col-12">
+          CNH *
+          {{ form.cnh.errors }}
+          {{ form.cnh }}
+        </div>
+        <div class="col-md-4 col-12">
+          Distância até nós *
+          {{ form.distancia.errors }}
+          {{ form.distancia }}
+        </div>
+      </div>
+      <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+    </div>
+</div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+  </div>
+
+</form>
+
+{% else %}
+
+<form class="my-0" method="post" action="">
+  {% csrf_token %}
+
+ <div class="modal-header d-flex justify-content-center">
+    <h3>Dados Complementares</h3>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group {% if field.errors %} invalid {% endif %}">
+      {{form.non_field_errors}}
+      {{form.errors}}
+      {% for item in validate %}
+        <div style="padding: 20px 50px 20px;">
+            <div class="row">
+                <div class="col-md-4 col-12" style="text-align: center;">
+                    Primeiro Emprego
+                    <br>
+                    {% if item.primeiro_emprego %}
+                      <input type="checkbox" name="primeiro_emprego" id="id_primeiro_emprego" class="onoffswitch-checkbox" checked>
+                    {% else %}
+                      <input type="checkbox" name="primeiro_emprego" id="id_primeiro_emprego">
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 col-12" style="text-align: center;">
+                    Disponível para Viagem
+                    <br>
+                    {% if item.disponivel_viagem %}
+                      <input type="checkbox" name="disponivel_viagem" id="id_disponivel_viagem" class="onoffswitch-checkbox" checked>
+                    {% else %}
+                      <input type="checkbox" name="disponivel_viagem" id="id_disponivel_viagem">
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 col-12" style="text-align: center;">
+                    Possui Deficiência
+                    <br>
+                    {% if item.deficiencia %}
+                      <input type="checkbox" name="deficiencia" id="id_deficiencia" class="onoffswitch-checkbox" checked>
+                    {% else %}
+                      <input type="checkbox" name="deficiencia" id="id_deficiencia">
+                    {% endif %}
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Área de Interesse (1) *
+                      {{ form.interesse1 }}
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Área de Interesse (2) *
+                      {{ form.interesse2 }}
+                </div>
+            </div>
+            
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-4 col-12">
+                    Facebook
+                    {% if item.facebook %}
+                      <input class="form-control" type="text" name="facebook" id="id_facebook" value="{{ item.facebook }}">
+                    {% else %}
+                      <input class="form-control" type="text" name="facebook" id="id_facebook">
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 col-12">
+                    LinkedIn
+                    {% if item.linkedin %}
+                      <input class="form-control" type="text" name="linkedin" id="id_linkedin" value="{{ item.linkedin }}">
+                    {% else %}
+                      <input class="form-control" type="text" name="linkedin" id="id_linkedin">
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 col-12">
+                    Como nos conheceu *
+                    {{form.inspecao}}
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-4 col-12">
+                  Pretensão Salarial * <a class="text-muted" style="font-size: smaller;"> (apenas números)</a>
+                    <input class="form-control" type="text" name="pretensao" id="id_pretensao" placeholder="R$" value="{{ item.pretensao }}">
+                </div>
+
+                <div class="col-md-4 col-12">
+                    CNH *
+                    {{ form.cnh }}
+                </div>
+
+                <div class="col-md-4 col-12">
+                    Distância até nós *
+                    {{ form.distancia }}
+                </div>
+            </div>
+            <a class="text-muted" style="font-size: smaller;"> * Campos Obrigatórios</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+  </div>
+
+</form>
+
+{% endif %}
+
+{% include 'base/assets/java/java.html' %}

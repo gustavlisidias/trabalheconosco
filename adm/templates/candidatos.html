@@ -1,0 +1,183 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'adm/assets/css/candidatos.css' %}?{% now 'U' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'adm/assets/css/modal.css' %}?{% now 'U' %}" type="text/css" />
+
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Candidatos</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Candidatos -->
+			<section id="banner">
+				<div class="content">
+					<small>Lembre-se sempre de excluir os cadastros após o final da seleção, ou o usuário não consiguirá se candidatar em outras vagas.</small>
+					<form method="GET" action="" id="searchform">
+						<div class="d-flex">
+							<div class="p-2 flex-grow-1">
+								<input class="searchfield" list="vagas" autocomplete="off" id="searchboxq" name="q" type="text" value="{{ request.GET.q }}" placeholder="Vaga" style="border-radius: 5px;">
+								<datalist id="vagas">
+									{% for i in vagas %}
+										<option value="{{ i }}"/>
+									{% endfor %}
+								</datalist>
+							</div>
+							<div class="p-2">
+								<input class="searchfield" list="status" autocomplete="off" id="searchboxp" name="p" type="text" value="{{ request.GET.p }}" placeholder="Status" style="border-radius: 5px;">
+								<datalist id="status">
+									<option value="Ativado"/>
+									<option value="Desativado"/>
+								</datalist>
+							</div>
+							<div class="p-2">
+								<input class="searchfield" autocomplete="off" id="searchboxr" name="r" type="text" value="{{ request.GET.r }}" placeholder="Usuario" style="border-radius: 5px;">
+							</div>
+							<div class="p-2">
+								<button type="submit"><i class="fa fa-search"></i></button>
+							</div>
+						</div>
+					</form>
+
+					<div class="hidden">{% include 'cadastrar/cadastrar_faseusuario.html' %}</div>
+					<div class="hidden">{% include 'update/update_vaga_usuario.html' %}</div>
+
+					<form method="POST" action="" id="deleteCandidatos">
+						{% csrf_token %}
+						<div class="d-flex flex-row-reverse" style="margin-right: 2%;">
+							<div class="p-2" style="margin-top: -0.8%;">
+								<label for="selecionartodos"><i class="fas fa-sort-down fa-3x"></i></label>
+								<input type="checkbox" id="selecionartodos" name="selecionartodos" style="display: none;"/>
+							</div>	
+							<div class="p-2">
+								<button title="Excluir selecionados" name="b1" value="b1" type="submit"><i class="fa fa-trash-alt"></i></button>
+							</div>
+							<div class="p-2">
+								<button title="Ativar selecionados" name="b2" value="b2" type="submit"><i class="fas fa-toggle-on"></i></button>
+							</div>	
+							<div class="p-2">
+								<button title="Enviar email reprovação selecionados"  name="b3" value="b3" type="submit"><i class="fas fa-envelope-open"></i></button>
+							</div>							
+						</div>						
+
+						{% for i in candidatos %}
+							<div class="bg-success border rounded mb-4 p-3">
+								<div class="row">
+									<!-- Imagem de perfil -->
+									<div class="col-0 col-md-4 d-none d-md-block d-flex align-items-center">
+										{% if i.imagem %}
+											<img class="border-0 rounded" id="img_{{i.usuario}}" src="/media/{{i.imagem}}" height="230" width="225">
+										{% else %}
+											<img class="border-0 rounded" id="img_{{i.usuario}}" src="{% static 'base/images/user.png' %}" height="230" width="225">
+										{% endif %}
+									</div>	
+
+									<!-- Nome + Linkedin + Interno + Vagasusuarios -->
+									<div class="col-12 col-md-8">
+										<div class="d-flex flex-nowrap">
+											<div class="order-1 mr-2">
+												{% if i.linkedin %}
+													<h3><a class="text-light" id="linkedin_{{ i.usuario }}" href="{{i.linkedin}}" target="_blank">{{ i.nome|title }}</a></h3>
+												{% else %}
+													<h3><a class="text-light" id="linkedin_{{ i.usuario }}" href="javascript:void(0)" target="_blank">{{ i.nome|title }}</a></h3>
+												{% endif %}
+											</div>
+											<div class="order-2 mr-2">
+												{% if i.usuario.is_interno %}
+													<h3><i class="fa-solid fa-award-simple"></i></h3>
+												{% endif %}
+											</div>
+											<div class="order-3 ml-auto">
+												<input type="checkbox" value="{{i.id}}" id="{{i.id}}" name="ids_selecionados">
+											</div>
+										</div>
+										
+										<!-- Cargo + Setor + Cidade + Data -->
+										<div class="d-flex flex-nowrap">
+											<div class="order-1">
+												<p class="text-light"><i class="fas fa-briefcase"></i> {{i.codigo_vaga}} | {{i.nome_cargo}} - {{i.nome_setor}}</p>
+												<p class="text-light"><i class="fas fa-map-marker-alt"></i> {{i.cidade}}</p>
+												<p class="text-light"><i class="far fa-clock"></i> {{ i.data_cadastro }}</p>
+											</div>
+										</div>
+
+										<!-- Curriculo - Desativar / Ativar - Email - Fase - Alterar vaga -->
+										<div class="d-flex flex-nowrap" style="margin-top: 2rem;">
+											<div class="order-1 pr-2">
+												<a target="_blank" title="Gerar currículo" href="{% url 'curriculo' i.usuario %}"><button type="button" class="btn btn-warning"><i class="fas fa-file-alt"></i></button></a>
+											</div>
+											<div class="order-2 pr-2">
+												{% if i.status %}
+													<button title="Desativar cadastro" type="submit" value="{{i.id}}" id="status_{{i.id}}" name="desativar_id" class="btn btn-warning"><i class="fas fa-lock-open"></i></button>
+												{% else %}
+													<button title="Ativar cadastro" type="submit" value="{{i.id}}" id="status_{{i.id}}" name="ativar_id" class="btn btn-warning"><i class="fas fa-lock"></i></button>
+												{% endif %}
+											</div>
+											<div class="order-3 pr-2">
+												{% if i.status %}
+													<button title="Enviar email de aprovação" type="submit" value="{{i.usuario}}" id="email_{{i.usuario}}" name="email_aprovacao" class="btn btn-warning"><i class="fas fa-envelope"></i></button>
+												{% else %}
+													<button title="Enviar email de reprovação" type="submit" value="{{i.usuario}}" id="email_{{i.usuario}}" name="email_reprovacao" class="btn btn-warning"><i class="fas fa-envelope-open"></i></button>
+												{% endif %}
+											</div>
+											<div class="order-4 pr-2">
+												<a href="{% url 'cadastrar_faseusuaurio' i.id %}" class="confirm-cadastrar-fase btn btn-warning text-white" title="Cadastrar fase para {{i.nome}}" data-toggle="modal" data-target="#confirmCadastroFaseModal" id="{{i.id}}"><button class="btn btn-warning"><i class="fas fa-calendar-alt"></i></button></a>
+											</div>
+											<div class="order-5">
+												<a href="{% url 'alterar_vagausuario' i.id %}" class="confirm-update-vagausuario btn btn-warning text-white" title="Alterar vaga para {{i.nome}}" data-toggle="modal" data-target="#confirmUpdateVagaUsuario" id="{{i.id}}"><button class="btn btn-warning"><i class="fa-solid fa-pen"></i></button></a>
+											</div>
+										</div>
+									</div>
+								</div>						
+							</div>
+						{% endfor %}
+
+						{% if candidatos.has_other_pages %}
+							<ul class="pagination">
+								{% if candidatos.has_previous %}
+									<li><a href="?page={{ users.previous_page_number }}">&laquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in candidatos.paginator.page_range %}
+									{% if candidatos.number == i %}
+										<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+									{% else %}
+										<li><a href="?page={{ i }}">{{ i }}</a></li>
+									{% endif %}
+								{% endfor %}
+								{% if candidatos.has_next %}
+									<li><a href="?page={{ candidatos.next_page_number }}">&raquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+						{% endif %}
+
+					</form>
+				</div>
+			</section>
+			<!-- Fim Candidatos -->
+
+		</div>
+	</div>
+
+	{% include 'menu.html' %}
+	{% include 'adm/assets/js/main.html' %}
+	{% include 'adm/assets/js/candidato.html' %}
+
+</div>
+
+{% endblock content %}

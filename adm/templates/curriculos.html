@@ -1,0 +1,138 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load chartkick %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'adm/assets/css/candidatos.css' %}?{% now 'U' %}" type="text/css" />
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Currículos</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Contas -->
+			<section>
+				<form method="GET" action="" id="searchform">
+					<div class="d-flex flex-row justify-content-end">
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxq" name="q" type="text" value="{{ request.GET.q }}" placeholder="Usuário" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<input class="searchfield" list="regiao" autocomplete="off" id="searchboxq" name="p" type="text" value="{{ request.GET.p }}" placeholder="Região" style="border-radius: 5px;">
+							<datalist id="regiao">
+								{% for f in regiao %}
+									<option value="{{ f }}"/>
+								{% endfor %}
+							</datalist>
+						</div>
+						<div class="p-2">
+							<input class="searchfield" list="interesses" autocomplete="off" id="searchboxq" name="r" type="text" value="{{ request.GET.r }}" placeholder="Interesse" style="border-radius: 5px;">
+							<datalist id="interesses">
+								{% for f in interesses %}
+									<option value="{{ f }}"/>
+								{% endfor %}
+							</datalist>
+						</div>
+						<div class="p-2">
+							<input class="searchfield" list="escolaridade" autocomplete="off" id="searchboxq" name="c" type="text" value="{{ request.GET.c }}" placeholder="Escolaridade" style="border-radius: 5px;">
+							<datalist id="escolaridade">
+								{% for f in escolaridade %}
+									<option value="{{ f }}"/>
+								{% endfor %}
+							</datalist>
+						</div>
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxq" name="n" type="text" value="{{ request.GET.n }}" placeholder="Experiências" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxs" name="s" type="date" value="{{ request.GET.s }}" placeholder="Data Inicial" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxt" name="t" type="date" value="{{ request.GET.t }}" placeholder="Data Final" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+				</form>
+				<header class="major">
+					<h2>Currículos Cadastrados</h2>
+				</header>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Usuário</th>
+							<th scope="col">Data Inscrição</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in curriculos %}
+							<tr>
+								<td><a href="{% url 'curriculo' i.usuario.id %}">{{i.usuario|title}}</a></td>
+								<td>{{i.usuario.data_inscricao|date:"SHORT_DATE_FORMAT"}}</td>							
+							</tr>
+						{% endfor %}
+
+						{% if curriculos.has_other_pages %}
+							<ul class="pagination">
+								{% if curriculos.has_previous %}
+									<li><a href="?curriculos-page={{ curriculos.previous_page_number }}#table-curriculos">&laquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in curriculos.paginator.page_range %}
+									{% if curriculos.number == i %}
+										<li style="border-bottom: 1px solid;" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+									{% else %}
+										<li><a href="?curriculos-page={{ i }}#table-curriculos">{{ i }}</a></li>
+									{% endif %}
+								{% endfor %}
+								{% if curriculos.has_next %}
+									<li><a href="?curriculos-page={{ curriculos.next_page_number }}#table-curriculos">&raquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+						{% endif %}
+
+					</tbody>
+				</table>
+			</section>
+			<!-- Fim Contas -->
+
+		</div>
+	</div>
+
+	<style>
+		[type="date"] {
+			background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
+			height: 2.75em;
+			border: solid 1px rgba(210, 215, 217, 0.75);
+			padding-left: 0.75em;
+			border-radius: 5px;
+		}
+	
+		[type="date"]::-webkit-inner-spin-button {
+			display: none;
+		}
+	
+		[type="date"]::-webkit-calendar-picker-indicator {
+			opacity: 0;
+		}		
+	</style>
+
+	{% include 'menu.html' %}
+	{% include 'adm/assets/js/main.html' %}
+	
+</div>
+{% endblock content %}

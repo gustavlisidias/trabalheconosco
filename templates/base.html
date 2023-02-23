@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+{% load static %}
+
+<head>
+  <title>Colorado Máquinas | Trabalhe Conosco</title>
+  <link rel="icon" href="{% static 'base/images/logo01.png' %}">
+  
+  <!-- Primary Meta Tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="title" content="Colorado Máquinas | Trabalhe Conosco">
+  <meta name="description" content="Veja nossas vagas, cadastre seu currículo e participe de nossos processos seletivos. Conheça o Trabalhe Conosco da Colorado Máquinas.">
+  <meta name="keywords" content="John Deere, Trabalho, Trabalhe Conosco, Vagas, Emprego, Colorado, Colorado Máquinas">
+  <meta name="author" content="Gustavo Lisi">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://trabalheconosco.coloradomaquinas.com.br/">
+  <meta property="og:title" content="Colorado Máquinas | Trabalhe Conosco">
+  <meta property="og:description" content="Veja nossas vagas, cadastre seu currículo e participe de nossos processos seletivos. Conheça o Trabalhe Conosco da Colorado Máquinas.">
+  <meta property="og:image" content="{% static 'base/images/seo.jpg' %}">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="http://trabalheconosco.coloradomaquinas.com.br/">
+  <meta property="twitter:title" content="Colorado Máquinas | Trabalhe Conosco">
+  <meta property="twitter:description" content="Veja nossas vagas, cadastre seu currículo e participe de nossos processos seletivos. Conheça o Trabalhe Conosco da Colorado Máquinas.">
+  <meta property="twitter:image" content="{% static 'base/images/seo.jpg' %}">
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EZFGCDFXZ4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-EZFGCDFXZ4');
+  </script>
+  <!-- End Google Analytics (PowerBI) -->
+
+  {% include 'snippets/header.html' %}
+</head>
+
+<body>
+  {% block content %}
+
+
+  {% endblock content %}
+</body>
+
+<footer>
+  {% include 'snippets/footer.html' %}
+</footer>
+  
+</html>

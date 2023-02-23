@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load chartkick %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'adm/assets/css/candidatos.css' %}?{% now 'U' %}" type="text/css" />
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Documentos</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Contas -->
+			<section>
+				<form method="GET" action="" id="searchform">
+					<div class="d-flex flex-row justify-content-end">
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxq" name="q" type="text" value="{{ request.GET.q }}" placeholder="Usuário" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+				</form>
+				<header class="major">
+					<h2>Documentos</h2>
+				</header>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Usuário</th>
+							<th scope="col">Envio</th>
+							<th scope="col">Documento</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in documentos %}
+							<tr>
+								<td>{{i.id}}</td>
+								<td>{{i.usuario|title}}</td>								
+								<td>{{i.data_envio|date:"SHORT_DATE_FORMAT"}}</td>	
+								<td>{{i.documentos}}</td>
+								<td><a target="_blank" title="Download" href="{{i.documentos.url }}"><i class="fas fa-file-download"></i></a></td>							
+							</tr>
+						{% endfor %}
+
+						{% if documentos.has_other_pages %}
+							<ul class="pagination">
+								{% if documentos.has_previous %}
+									<li><a href="?page={{ documentos.previous_page_number }}">&laquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in documentos.paginator.page_range %}
+									{% if documentos.number == i %}
+										<li style="border-bottom: 1px solid;" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+									{% else %}
+										<li><a href="?page={{ i }}">{{ i }}</a></li>
+									{% endif %}
+								{% endfor %}
+								{% if documentos.has_next %}
+									<li><a href="?page={{ documentos.next_page_number }}">&raquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+						{% endif %}
+					</tbody>
+				</table>
+			</section>
+			<!-- Fim Contas -->
+
+		</div>
+	</div>
+
+	{% include 'menu.html' %}
+	{% include 'adm/assets/js/main.html' %}
+	
+</div>
+{% endblock content %}

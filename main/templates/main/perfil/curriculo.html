@@ -1,0 +1,400 @@
+<div class="modal-header d-flex justify-content-center">
+    <h3>Meu Currículo</h3>
+</div>
+
+<div class="modal-body">
+
+    {% if dados_pessoais %}
+        <h3 class="modal-title text-center justify-content-center">Dados Pessoais</h4>
+        <br class="d-none d-lg-block">
+
+        {% for item in dados_pessoais %}
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Nome Completo
+                    <input value="{{ item.nome_completo }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Email
+                    <input value="{{ item.email }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-3 col-12">
+                    CPF
+                    <input value="{{ item.cpf }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-2 col-12">
+                    RG
+                    <input value="{{ item.rg }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-2 col-12">
+                    Nascimento
+                    <input value="{{ item.data_nascimento|date:"SHORT_DATE_FORMAT" }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-2 col-12">
+                    Gênero
+                    <input value="{{ item.sexo }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-3 col-12">
+                    Estado Civil
+                    <input value="{{ item.estado_civil }}" class="form-control" readonly>
+                </div>
+
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-4 col-12">
+                    País
+                    <input value="{{ item.pais }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    Estado
+                    <input value="{{ item.estado }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    Cidade
+                    <input value="{{ item.cidade }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-3 col-12">
+                    CEP
+                    <input value="{{ item.cep }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-2 col-12">
+                    Bairro
+                    {% if item.bairro == NULL %}
+                        <input value="" class="form-control" readonly>
+                    {% else %}
+                        <input value="{{ item.bairro }}" class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-2 col-12">
+                    Endereço
+                    {% if item.endereco == NULL %}
+                        <input value="" class="form-control" readonly>
+                    {% else %}
+                        <input value="{{ item.endereco }}" class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-2 col-12">
+                    Número
+                    {% if item.numero == NULL %}
+                        <input value="" class="form-control" readonly>
+                    {% else %}
+                        <input value="{{ item.numero }}" class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-3 col-12">
+                    Complemento
+                    {% if item.complemento == NULL or item.complemento == " " %}
+                        <input value="" class="form-control" readonly>
+                    {% else %}
+                        <input value="{{ item.complemento }}" class="form-control" readonly>
+                    {% endif %}
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Telefone Fixo
+                    {% if item.telefone == NULL or item.telefone == " " %}
+                        <input value="" class="form-control" readonly>
+                    {% else %}
+                        <input value="{{ item.telefone }}" class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Celular
+                    <input value="{{ item.celular }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+        {% endfor %}
+        <hr>
+    {% endif %}
+
+    <!--FORMAÇÕES-->
+    {% if formacoes %}
+        <h3 class="modal-title text-center justify-content-center">Formações Acadêmicas</h4>
+        <br class="d-none d-lg-block">
+
+        {% for item in formacoes %}
+        {{ forloop.counter }}. 
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Nível de Escolaridade
+                    <input value="{{ item.escolaridade }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Instituição de Ensino
+                    <input value="{{ item.instituicao }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Curso
+                    {% if item.curso == " " or item.curso == NULL %}
+                        <input value="" class="form-control" readonly>
+                    {% else %}
+                        <input value="{{ item.curso }}" class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Status
+                    <input value="{{ item.status_formacao }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <br>
+        {% endfor %}
+        <hr>
+    {% endif %}
+    <!--FIM-->
+
+    <!--EXPERIENCIAS-->
+    {% if experiencias %}
+        <h3 class="modal-title text-center justify-content-center">Experiências Profissionais</h4>
+        <br class="d-none d-lg-block">
+
+        {% for item in experiencias %}
+        {{ forloop.counter }}. 
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Organização de Atuação
+                    <input value="{{ item.empresa }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Área de Atuação
+                    <input value="{{ item.atuacao }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <!--alterado no dia 22/10/2020-->
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Cargo de Atuação
+                    <textarea class="form-control" readonly>{{ item.cargo_exp }}</textarea> 
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Atividades de Atuação
+                    <textarea class="form-control" readonly>{{ item.atividades_exp }}</textarea> 
+                </div>
+            </div>
+            <!--alterado no dia 22/10/2020-->
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Data de Entrada
+                    <input value="{{ item.data_entrada|date:"SHORT_DATE_FORMAT" }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Data de Saída
+                    {% if item.data_saida == NULL or item.data_saida|date:"SHORT_DATE_FORMAT" == '01/01/1900' %}
+                        <input value="----------" class="form-control" readonly>
+                    {% else %}
+                        <input value="{{ item.data_saida|date:"SHORT_DATE_FORMAT" }}" class="form-control" readonly>
+                    {% endif %}
+                </div>
+            </div>
+
+            <br>
+        {% endfor %}
+        <hr>
+    {% endif %}
+    <!--FIM-->
+
+    <!--IDIOMAS-->
+    {% if idiomas %}
+        <h3 class="modal-title text-center justify-content-center">Idiomas</h4>
+        <br class="d-none d-lg-block">
+
+        {% for item in idiomas %}
+        {{ forloop.counter }}. 
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Idioma de Conhecimento
+                    <input value="{{ item.idioma }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Nível de Conhecimento
+                    <input value="{{ item.nivel_idioma }}" class="form-control" readonly>
+                </div>
+            </div>
+            
+            <br>
+        {% endfor %}
+        <hr>
+    {% endif %}
+    <!--FIM-->
+
+    <!--TECNOLOGIAS-->
+    {% if tecnologias %}
+        <h3 class="modal-title text-center justify-content-center">Conhecimento Tecnológico</h4>
+        <br class="d-none d-lg-block">
+
+        {% for item in tecnologias %}
+        {{ forloop.counter }}. 
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Sistema de Conhecimento
+                    <input value="{{ item.sistema }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Nível de Conhecimento
+                    <input value="{{ item.nivel_sistema }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <br>
+        {% endfor %}
+        <hr>
+    {% endif %}
+    <!--FIM-->
+
+    <!--INFORMAÇÕES-->
+    {% if dados_complementares %}
+        <h3 class="modal-title text-center justify-content-center">Dados Complementares</h4>
+        <br class="d-none d-lg-block">
+
+        {% for item in dados_complementares %}
+            <div class="row">
+                <div class="col-md-4 col-12">
+                    Primeiro Emprego
+                    {% if item.primeiro_emprego %}
+                        <input value="Sim" class="form-control" readonly>
+                    {% else %}
+                        <input value="Não" class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 col-12">
+                    Disponível para Viagem
+                    {% if item.disponivel_viagem %}
+                        <input value="Sim" class="form-control" readonly>
+                    {% else %}
+                        <input value="Não" class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 col-12">
+                    Possui Deficiência
+                    {% if item.deficiencia %}
+                        <input value="Sim" class="form-control" readonly>
+                    {% else %}
+                        <input value="Não" class="form-control" readonly>
+                    {% endif %}
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Área de Interesse (1)
+                    <input value="{{ item.interesse1 }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    Área de Interesse (2)
+                    <input value="{{ item.interesse2 }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-4 col-12">
+                    Facebook
+                    {% if item.facebook %}
+                        <input value="{{ item.facebook }}" class="form-control" readonly>
+                    {% else %}
+                        <input value=" " class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 col-12">
+                    LinkedIn
+                    {% if item.linkedin %}
+                        <input value="{{ item.linkedin }}" class="form-control" readonly>
+                    {% else %}
+                        <input value=" " class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 col-12">
+                    Como nos Conheceu
+                    <input value="{{ item.inspecao }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+
+            <div class="row">
+                <div class="col-md-4 col-12">
+                    Pretensão Salarial
+                    {% if item.pretensao %}
+                        <input value="R${{ item.pretensao }}" class="form-control" readonly>
+                    {% else %}
+                        <input value="R$0,00" class="form-control" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 col-12">
+                    CNH
+                    <input value="{{ item.cnh }}" class="form-control" readonly>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    Distância até nós
+                    <input value="{{ item.distancia }}" class="form-control" readonly>
+                </div>
+            </div>
+
+            <br class="d-none d-lg-block">
+        {% endfor %}
+    {% endif %}
+    <!--FIM-->
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Fechar</button>
+</div>

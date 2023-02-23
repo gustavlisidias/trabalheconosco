@@ -1,0 +1,108 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load chartkick %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'adm/assets/css/candidatos.css' %}?{% now 'U' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'adm/assets/css/modal.css' %}?{% now 'U' %}" type="text/css" />
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Minhas Requisições</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<section>
+				<form method="GET" action="" id="searchform">
+					<div class="d-flex flex-row justify-content-end">
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxq" name="q" type="text" value="{{ request.GET.q }}" placeholder="Requisição" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+				</form>
+				<header class="major">
+					<h2>Requisições</h2>
+				</header>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Cargo</th>
+							<th scope="col">Setor</th>
+							<th scope="col">Data</th>
+							<th style="text-align: center;" scope="col">Status</th>   
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in requisicoes %}
+							<tr>
+								<td>{{i.codigo}}</td>
+								<td><a title="Visualizar requisição" href="/administracao/update/requisicao/{{ i.id }}">{{i.cargo}}</a></td>
+								<td>{{i.setor}}</td>
+								<td>{{i.data_a|date:"SHORT_DATE_FORMAT"}}</td>			
+								<td style="text-align: center;"><i class="fa-solid fa-eye" data-toggle="modal" data-target="#modal-acompanhamento-{{i.id}}" style="color: green;"></i></td>				
+							</tr>
+							
+							<div class="modal fade" id="modal-acompanhamento-{{i.id}}" tabindex="-1" role="dialog" aria-labelledby="modal-acompanhamento" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title text-dark">({{i.codigo}}) - Status Aprovações</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										</div>
+										<div class="modal-body">
+											{% if i.status_b and i.status_c and i.status_d %}
+												<p>
+													RH: Aprovado <br>
+													Gerente: Aprovado <br>
+													Diretoria: Aprovado
+												</p>
+											{% elif i.status_b and i.status_c and not i.status_d %}
+												<p>
+													RH: Aprovado <br>
+													Gerente: Aprovado <br>
+													Diretoria: Pendente
+												</p>
+											{% elif i.status_b and not i.status_c and not i.status_d %}
+												<p>
+													RH: Aprovado <br>
+													Gerente: Pendente <br>
+													Diretoria: Pendente
+												</p>
+											{% elif not i.status_b and not i.status_c and not i.status_d %}
+												<p>
+													RH: Pendente <br>
+													Gerente: Pendente <br>
+													Diretoria: Pendente
+												</p>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+
+						{% endfor %}
+					</tbody>
+				</table>
+			</section>
+
+		</div>
+	</div>
+
+	{% include 'menu.html' %}
+	{% include 'adm/assets/js/main.html' %}
+	
+</div>
+{% endblock content %}

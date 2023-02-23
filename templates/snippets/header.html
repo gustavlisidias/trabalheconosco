@@ -1,0 +1,41 @@
+{% load static %}
+<header class="fonte">
+
+    {% include 'base/assets/css/css.html' %}
+
+    <div class="navbar fixed-top mx-auto bg-white shadow-lg flex-column flex-md-row">
+        <div class="d-flex align-items-start flex-row bd-highlight">
+            <div class="d-none d-md-block">
+                <a style="text-decoration:none;" href="{% url 'home' %}"><h5 class="mb-0 font-weight-light text-dark" style="font-size: 20px">Colorado Máquinas&nbsp;</h5></a>
+            </div>
+            <div class="d-none d-md-block">
+                <a style="text-decoration:none;" href="{% url 'home' %}"><img class="img-fluid" src="{% static 'base/images/logo00.png' %}" width="160"></a>
+            </div>
+        </div>
+
+        <nav class="my-2 my-md-0 mr-md-2 mx-auto">
+            {% if request.user.is_authenticated %}
+                {% if not request.user.is_admin %}
+                    <a class="p-2 text-dark" href="#" id="modal_contato">Contato</a>
+                {% else %}
+                    <a class="p-2 text-dark" href="{% url 'administracao' %}">Admin</a>
+                {% endif %}
+                <a class="p-2 text-dark" href="{% url 'perfil' %}">Perfil</a>
+                <a class="p-2 text-dark" href="{% url 'vagas' %}">Vagas</a>
+                <a class="btn btn-dark buttonlogin" href="{% url 'sair' %}">Sair</a>
+            {% else %}
+                <a class="p-2 text-dark" href="#" id="modal_contato">Contato</a>
+                <a class="p-2 text-dark" href="{% url 'home' %}">Início</a>
+                <a class="p-2 text-dark" href="{% url 'vagas' %}">Vagas</a>
+                <a class="btn btn-success buttonlogin" href="{% url 'entrar' %}">Entrar</a>
+            {% endif %}
+        </nav>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+</header>

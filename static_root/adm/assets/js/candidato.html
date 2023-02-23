@@ -1,0 +1,13 @@
+{% load static %}
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script>
+	$(function() {
+		jQuery("[name=selecionartodos]").click(function(source) { 
+			checkboxes = jQuery("[name=ids_selecionados]");
+			for(var i in checkboxes){
+				checkboxes[i].checked = source.target.checked;
+			}
+		});
+	})
+</script>

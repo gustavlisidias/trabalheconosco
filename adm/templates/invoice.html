@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+
+<style>
+    hr {
+        border-style: ridge;
+        color: green;
+        background-color: green;
+    }
+    @media print {
+        .new-page {
+            page-break-before: always;
+        }
+    }
+</style>
+
+<head>
+    <title>Colorado Máquinas | Currículo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+
+    <table>
+        <tr>
+            <td style="font-size: 15px; text-align: left; padding-top: 10px;"><b>Colorado Máquinas</b></td>
+            <td></td>
+            <td style="font-size: 15px; text-align: right; color: green; font-family:Verdana, Geneva, Tahoma, sans-serif">
+                <img src="http://trabalheconosco.coloradomaquinas.com.br/static/invoice/logo1.png" style="width: 200px; height: 50px;">
+            </td>
+        </tr>
+    </table>
+
+    <div style="width:2080px; height: 50px; margin: -50px -10px 0px; text-align: center;">
+        <img src="http://trabalheconosco.coloradomaquinas.com.br/static/invoice/logo3.jpg"><br>
+        <img src="http://trabalheconosco.coloradomaquinas.com.br/static/invoice/logo2.jpg" style="height: 40px;">
+    </div>
+</head>
+
+<body">
+    <div>
+        <H1 style="text-align: center;">Currículo</H1>
+    </div>
+    <div>
+        <h2>Dados Pessoais</h2>
+        <!-- <table> -->
+        {% for itens in itensDadosPessoais %}
+        <table>
+            <tr>
+                <td><b>Nome Completo: </b>{{ itens.nome_completo }}</td>
+                <td></td>
+                <td><b>Email: </b>{{ itens.email }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Telefone: </b>{% if itens.telefone %}{{ itens.telefone }}{% endif %}</td>
+                <td></td>
+                <td><b>Celular: </b>{{ itens.celular }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Cidade: </b>{{ itens.cidade }}, {{ itens.estado }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Endereço: </b>{{ itens.endereco }} {{ itens.numero }}, {{ itens.bairro }} - {{ itens.cep }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Nascimento: </b>{{ itens.data_nascimento|date:"SHORT_DATE_FORMAT"  }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>CPF: </b>{{ itens.cpf }}</td>
+                <td></td>
+                <td><b>RG: </b>{{ itens.rg }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Gênero: </b>{{ itens.sexo }}</td>
+                <td></td>
+                <td><b>Estado Civil: </b>{{ itens.estado_civil }}</td>
+            </tr>
+        </table>
+        {% endfor %}
+        <!-- </table> -->
+        <h2>Formações Acadêmicas</h2>
+        <blockquote>
+            <p>
+                {% for itens in itensFormacao %}
+                <ul>
+                    <li>{{ itens.curso }} - {{ itens.instituicao }} <small> ({{ itens.status_formacao }})</small></li>
+                </ul>
+                {% endfor %}
+            </p>
+        </blockquote>
+        <h2>Experiências Profissionais</h2>
+        <blockquote>
+            <p>
+                {% for itens in itensExperiencia %}
+                <ul>
+                    <li>
+                        {{ itens.atuacao }} - {{ itens.empresa }}
+                        {% if itens.data_saida|date:"SHORT_DATE_FORMAT" != '01/01/1900' %}
+                            (De {{ itens.data_entrada|date:"SHORT_DATE_FORMAT" }} a {{ itens.data_saida|date:"SHORT_DATE_FORMAT" }})
+                        {% else %}
+                            (Desde {{ itens.data_entrada|date:"SHORT_DATE_FORMAT" }})
+                        {% endif %}
+                        <ul>
+							<br>Cargo: {{ itens.cargo_exp }}
+							<br>
+							<br>Atividades: {{ itens.atividades_exp }}
+						</ul>
+                    </li>
+                </ul>
+				<br>
+                {% endfor %}
+            </p>
+        </blockquote>
+        <h2>Idiomas</h2>
+        <blockquote>
+            <p>
+                {% for itens in itensIdioma %}
+                <ul>
+                    <li>{{ itens.idioma }} - {{ itens.nivel_idioma }}</li>
+                </ul>
+                {% endfor %}
+            </p>
+        </blockquote>
+        <h2>Tecnologias</h2>
+        <blockquote>
+            <p>
+                {% for itens in itensTecnologia %}
+                <ul>
+                    <li>{{ itens.sistema }} - {{ itens.nivel_sistema }}</li>
+                </ul>
+                {% endfor %}
+            </p>
+        </blockquote>
+        <h2>Informações Adicionais</h2>
+        <blockquote>
+            <p>
+                {% for itens in itensComplementar %}
+                <ul>
+                    {% if itens.interesse1 != itens.interesse2  %}
+                        <li><b>Áreas de interesse:</b> {{ itens.interesse1 }} e {{ itens.interesse2 }}</li>
+                    {% else %}
+                        <li><b>Área de interesse:</b> {{ itens.interesse1 }}</li>
+                    {% endif %}
+                    {% if itens.disponivel_viagem %}
+                        <li><b>Disponibilidade para viagem:</b> Sim</li>
+                    {% else %}
+                        <li><b>Disponibilidade para viagem:</b> Não</li>
+                    {% endif %}
+                    {% if itens.deficiencia %}
+                        <li><b>Possui deficiência:</b> Sim</li>
+                    {% else %}
+                        <li><b>Possui deficiência:</b> Não</li>
+                    {% endif %}
+                    {% if itens.primeiro_emprego %}
+                        <li><b>Primeiro emprego:</b> Sim</li>
+                    {% endif %}
+                        <li><b>CNH:</b> {{itens.cnh}}</li>
+                    {% if itens.facebook %}
+                        <li><b>Facebook:</b> {{ itens.facebook }}</li>
+                    {% endif %}
+                    {% if itens.linkedin %}
+                        <li><b>LinkedIn:</b> {{ itens.linkedin }}</li>
+                    {% endif %}
+                    <li><b>Raio de distância:</b> {{itens.distancia}}</li>
+                    {% if itens.pretensao is not null %}
+                        <li><b>Pretensao:</b> {{ itens.pretensao }}</li>
+                    {% endif %}
+                </ul>
+                {% endfor %}
+            </p>
+        </blockquote>
+
+
+        <table class="new-page">
+            <tr>
+                <td style="font-size: 15px; text-align: left; padding-top: 10px;"><b>Colorado Máquinas</b></td>
+                <td></td>
+                <td style="font-size: 15px; text-align: right; color: green; font-family:Verdana, Geneva, Tahoma, sans-serif">
+                    <img src="http://trabalheconosco.coloradomaquinas.com.br/static/invoice/logo1.png" style="width: 200px; height: 50px;">
+                </td>
+            </tr>
+        </table>
+    
+        <div style="width:2080px; height: 50px; margin: -50px -10px 0px; text-align: center;">
+            <img src="http://trabalheconosco.coloradomaquinas.com.br/static/invoice/logo3.jpg"><br>
+            <img src="http://trabalheconosco.coloradomaquinas.com.br/static/invoice/logo2.jpg" style="height: 40px;">
+        </div>
+
+        <div>
+            <h1 style="text-align: center;">Questionário</h1>
+        </div>
+        <br>
+        <blockquote>
+            <p>
+                {% for itens in itensQuestionario %}
+                    <b>Descreva como é um bom lugar para se trabalhar: </b>{{ itens.pergunta1 }}
+                    <br><br>
+                    <b>Você prefere trabalhar sozinho ou em equipe? </b>{{ itens.pergunta2 }}
+                    <br><br>
+                    <b>Qual foi sua maior conquista até hoje (pessoal ou profissional)? </b>{{ itens.pergunta3 }}
+                    <br><br>
+                    <b>Qual o seu maior sonho? </b>{{ itens.pergunta4 }}
+                    <br><br>
+                    <b>Por que deseja trabalhar conosco? </b>{{ itens.pergunta5 }}
+                {% endfor %}
+            </p>
+        </blockquote>
+
+
+        <table class="new-page">
+            <tr>
+                <td style="font-size: 15px; text-align: left; padding-top: 10px;"><b>Colorado Máquinas</b></td>
+                <td></td>
+                <td style="font-size: 15px; text-align: right; color: green; font-family:Verdana, Geneva, Tahoma, sans-serif">
+                    <img src="http://trabalheconosco.coloradomaquinas.com.br/static/invoice/logo1.png" style="width: 200px; height: 50px;">
+                </td>
+            </tr>
+        </table>
+    
+        <div style="width:2080px; height: 50px; margin: -50px -10px 0px; text-align: center;">
+            <img src="http://trabalheconosco.coloradomaquinas.com.br/static/invoice/logo3.jpg"><br>
+            <img src="http://trabalheconosco.coloradomaquinas.com.br/static/invoice/logo2.jpg" style="height: 40px;">
+        </div>
+
+        <div>
+            <h1 style="text-align: center;">Fases dos Processos</h1>
+        </div>
+        {% for itens in itensFases %}
+            <h2>Fase: {{ itens.fase }}</h2>
+            <h2>Vaga: {{ itens.vaga }}</h2>
+            <blockquote>
+                <p>
+                    <ul><li>{{ itens.observacao|safe }}</li></ul>
+                </p>
+            </blockquote>
+            <br>
+        {% endfor %}
+
+        <div>
+            <h1 style="text-align: center;">Historico de Vagas</h1>
+        </div>
+        {% for itens in itensVagasUsuario %}
+            <h5>Vaga: {{ itens.vaga }}</h5>
+            <h5>Data: {{ itens.data_cadastro }}</h5>
+            <h5>Status: {% if itens.status_cadastro %} Classificado {% else %} Não Classificado {% endif %}</h5>
+            <hr>
+        {% endfor %}
+    </div>
+</body>

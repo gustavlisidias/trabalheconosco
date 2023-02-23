@@ -1,0 +1,78 @@
+{% include '../mails/messages.html' %}
+
+<form class="my-0" method="post" action="">
+    {% csrf_token %}
+
+    {% if not atualizar %}
+        <div class="modal-header d-flex justify-content-center">
+            <h3>Questionário</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="px-5">
+                {% for item in questionario %}
+                    Descreva como é um bom lugar para se trabalhar:
+                    <textarea class="form-control" readonly name="pergunta1"
+                        id="id_pergunta1">{{ item.pergunta1 }}</textarea><br>
+
+                    Você prefere trabalhar sozinho ou em equipe?
+                    <textarea class="form-control" readonly name="pergunta2"
+                        id="id_pergunta2">{{ item.pergunta2 }}</textarea><br>
+
+                    Qual foi sua maior conquista até hoje (pessoal ou profissional)?
+                    <textarea class="form-control" readonly name="pergunta3"
+                        id="id_pergunta3">{{ item.pergunta3 }}</textarea><br>
+
+                    Qual o seu maior sonho?
+                    <textarea class="form-control" readonly name="pergunta4"
+                        id="id_pergunta4">{{ item.pergunta4 }}</textarea><br>
+
+                    Por que deseja trabalhar conosco?
+                    <textarea class="form-control mb-5" readonly name="pergunta5" id="id_pergunta5">{{ item.pergunta5 }}</textarea>
+                {% endfor %}
+
+                Cadastrado em: {{ data_cadastro }}
+                
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Fechar</button>
+        </div>
+    {% else %}
+        <div class="modal-header d-flex justify-content-center">
+            <h3>Questionário</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="px-5">
+                Descreva como é um bom lugar para se trabalhar
+                <textarea class="form-control" name="pergunta1" cols="40" rows="5" maxlength="256" required=""
+                    id="id_pergunta1"></textarea><br>
+
+                Você prefere trabalhar sozinho ou em equipe?
+                <textarea class="form-control" name="pergunta2" cols="40" rows="5" maxlength="256" required=""
+                    id="id_pergunta2"></textarea><br>
+
+                Qual foi sua maior conquista até hoje (pessoal ou profissional)?
+                <textarea class="form-control" name="pergunta3" cols="40" rows="5" maxlength="256" required=""
+                    id="id_pergunta3"></textarea><br>
+
+                Qual o seu maior sonho?
+                <textarea class="form-control" name="pergunta4" cols="40" rows="5" maxlength="256" required=""
+                    id="id_pergunta4"></textarea><br>
+
+                Por que deseja trabalhar conosco?
+                <textarea class="form-control" name="pergunta5" cols="40" rows="5" maxlength="256" required=""
+                    id="id_pergunta5"></textarea>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+        </div>
+    {% endif %}
+</form>
+
+{% include 'base/assets/java/java.html' %}

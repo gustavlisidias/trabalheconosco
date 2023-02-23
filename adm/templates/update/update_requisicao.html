@@ -1,0 +1,206 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+<div id="wrapper">
+    <div id="main">
+        <div class="inner">
+
+            {% include 'mensagem.html' %}
+
+            <!-- Inicio Header -->
+            <header id="header">
+                <span class="label"><strong>Administração</strong> >> Editar >> Requisicao</span>
+                <ul class="icons">
+                    <li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+                </ul>
+            </header>
+            <!-- Fim Header -->
+
+            <script src="https://cdn.ckeditor.com/4.16.1/standard-all/ckeditor.js"></script>
+            <section id="banner">
+                <div class="content">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for i in requisicao %}
+                            <div class="row" style="margin-bottom: 1rem">
+                                <div class="col-2">
+                                    <label>Código</label>
+                                    <input type="number" name="codigo" value="{{i.codigo}}" required="" id="id_codigo">
+                                </div>
+                                <div class="col-4">
+                                    <label>Contratação</label>
+                                    <select name="tipo_vaga" required="" id="id_tipo_vaga">
+                                        <option value="{{i.tipo_vaga}}" hidden selected="">{{i.tipo_vaga}}</option>
+                                        {% for f in contratos %}
+                                            <option value="{{f}}">{{f}}</option>   
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label>Nível de Ensino</label>
+                                    <select name="ensino" required="" id="id_ensino">
+                                        <option value="{{i.ensino}}" hidden selected="">{{i.ensino}}</option>
+                                        {% for f in escolaridade %}
+                                            <option value="{{f}}">{{f}}</option>   
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 1rem">
+                                <div class="col-4">
+                                    <label>Regiao</label>
+                                    <select name="filial" required="" id="id_filial">
+                                        <option value="{{i.filial.id}}" hidden selected="">{{i.filial}}</option>
+                                        {% for f in filiais %}
+                                            <option value="{{f.id}}">{{f.cidade}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label>Setor</label>
+                                    <select name="setor" required="" id="id_setor">
+                                        <option value="{{i.setor.id}}" hidden selected="">{{i.setor}}</option>
+                                        {% for f in setores %}
+                                            <option value="{{f.id}}">{{f}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label>Cargo</label>
+                                    <select name="cargo" required="" id="id_cargo">
+                                        <option value="{{i.cargo.id}}" hidden selected="">{{i.cargo}}</option>
+                                        {% for f in cargos %}
+                                            <option value="{{f.id}}">{{f}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" style="margin-bottom: 1rem">
+                                <div class="col-4">
+                                    <label>Salario</label>
+                                    <input type="number" name="salario" value="{{i.salario}}" required="" id="id_salario">
+                                </div>
+                                <div class="col-4">
+                                    <label>Gestor</label>
+                                    <select name="gestor" required="" id="id_gestor">
+                                        <option value="{{i.gestor.id}}" hidden selected="">{{i.gestor.username}}</option>
+                                        {% for f in gestores %}
+                                            <option value="{{f.id}}">{{f.username}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label>Tipo de requisição</label>
+                                    <select name="tipo" required="" id="id_tipo">
+                                        <option value="{{i.tipo}}" hidden selected="">{{i.tipo}}</option>
+                                        {% for f in exitint %}
+                                            <option value="{{f}}">{{f}}</option>   
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div style="margin-bottom: 1rem">
+                                <label>Requisitos</label>
+                                <textarea cols="40" id="id_requisitos" maxlength="1024" name="requisitos" rows="10">{{i.requisitos|safe}}</textarea>
+                            </div>
+
+                            <div style="margin-bottom: 1rem">
+                                <label>Atividades</label>
+                                <textarea cols="40" id="id_atividades" maxlength="1024" name="atividades" rows="10">{{i.atividades|safe}}</textarea>
+                            </div>
+
+                            <div style="margin-bottom: 1rem">
+                                <label>Habilidades</label>
+                                <textarea cols="40" id="id_habilidades" maxlength="1024" name="habilidades" rows="10">{{i.habilidades|safe}}</textarea>
+                            </div>
+
+                            <div style="margin-bottom: 1rem">
+                                <label>Ferramentas</label>
+                                <textarea cols="40" id="id_ferramentas" maxlength="1024" name="ferramentas" rows="10">{{i.ferramentas|safe}}</textarea>
+                            </div>
+
+                            <div style="margin-bottom: 1rem">
+                                <label>Recrutamento</label>
+                                <textarea cols="40" id="id_recrutamento" maxlength="1024" name="recrutamento" rows="10">{{i.recrutamento|safe}}</textarea>
+                            </div>
+
+                            <div style="margin-bottom: 1rem">
+                                <label>Informações</label>
+                                <textarea cols="40" id="id_informacoes" maxlength="1024" name="informacoes" rows="10">{{i.informacoes|safe}}</textarea>
+                            </div>
+
+                            {% if i.usuario_a == request.user %}
+                                <button name="alterar_requisicao" value={{i.id}} type="submit">Salvar</button>
+                                <button name="excluir_requisicao" value={{i.id}} style="box-shadow: inset 0 0 0 2px red; color: red !important;" type="submit">Excluir</button>
+                            {% else %}
+                                <script type="text/javascript">
+                                    document.getElementById('id_codigo').setAttribute('readonly', true);
+                                    document.getElementById('id_ensino').setAttribute('readonly', true);
+                                    document.getElementById('id_tipo_vaga').setAttribute('readonly', true);
+                                    document.getElementById('id_filial').setAttribute('readonly', true);
+                                    document.getElementById('id_setor').setAttribute('readonly', true);
+                                    document.getElementById('id_cargo').setAttribute('readonly', true);
+                                    document.getElementById('id_salario').setAttribute('readonly', true);
+                                    document.getElementById('id_gestor').setAttribute('readonly', true);
+                                    document.getElementById('id_tipo').setAttribute('readonly', true);
+                                    document.getElementById('id_requisitos').setAttribute('readonly', true);
+                                    document.getElementById('id_atividades').setAttribute('readonly', true);
+                                    document.getElementById('id_habilidades').setAttribute('readonly', true);
+                                    document.getElementById('id_ferramentas').setAttribute('readonly', true);
+                                    document.getElementById('id_recrutamento').setAttribute('readonly', true);
+                                    document.getElementById('id_informacoes').setAttribute('readonly', true);
+                                </script>
+                                <style>
+                                    select[readonly] {
+                                        pointer-events:none;
+                                    }
+                                }</style>
+                            {% endif %}
+                        {% endfor %}
+                    </form>
+                </div>
+            </section>
+
+            <style>
+                [type="number"] {
+                    border-radius: 5px;
+                    height: 2.75em;
+                    border: solid 1px rgba(210, 215, 217, 0.75);
+                }
+
+                [type="date"] {
+                    background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
+                    height: 2.75em;
+                    border: solid 1px rgba(210, 215, 217, 0.75);
+                    border-radius: 5px;
+                }
+
+                [type="date"]::-webkit-inner-spin-button {
+                    display: none;
+                }
+
+                [type="date"]::-webkit-calendar-picker-indicator {
+                    opacity: 0;
+                }
+            </style>
+        </div>
+    </div>
+
+    {% include 'menu.html' %}
+
+    <script>
+        CKEDITOR.replace('id_requisitos');
+        CKEDITOR.replace('id_atividades');
+        CKEDITOR.replace('id_habilidades');
+        CKEDITOR.replace('id_ferramentas');
+        CKEDITOR.replace('id_recrutamento');
+        CKEDITOR.replace('id_informacoes');
+    </script>
+
+</div>
+
+{% endblock content %}

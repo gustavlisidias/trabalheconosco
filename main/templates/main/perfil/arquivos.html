@@ -1,0 +1,34 @@
+<form method="post" action="" enctype="multipart/form-data" class="my-0">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <div class="col d-flex justify-content-center">
+      <h3 class="modal-title pr-2">Enviar arquivos</h3>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <div class="mb-2 d-flex justify-content-center">
+      <p class="text-center justify-content-center">Selecione todos os arquivos que você deseja nos enviar.</p>
+    </div>
+    <div class="form-group {% if field.errors %} invalid {% endif %}">
+      <div class="mb-2 d-flex justify-content-center">
+        <label class="btn btn-secondary search-file-btn" style="width: 30%;">
+          <input type="file" name="documentos" multiple="multiple" id="id_documentos" onchange="javascript:updateList()"
+            style="display:None;"> <span>Procurar arquivos</span>
+        </label>
+      </div>
+      <div class="mb-5 d-flex justify-content-center">
+        <p class="text-center justify-content-center" id="fileList">Nenhum documento selecionado</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-success text-white" id="submitButton">Salvar</button>
+  </div>
+
+</form>
+
+{% include 'base/assets/java/java.html' %}

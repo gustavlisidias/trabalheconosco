@@ -1,0 +1,18 @@
+<div class="modal fade" id="confirmDuplicateVaga" tabindex="-1" caller-id="" role="dialog" aria-labelledby="confirmDuplicateVaga" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" id="formDuplicateVaga" action="">
+                {% csrf_token %} 
+                <div class="modal-body d-flex justify-content-center">
+                    <p> 
+                        <b id="vagadup_id"></b>
+                    </p>              
+                </div>
+                <div class="modal-footer d-flex justify-content-center align-self-center text-center">
+                    <button type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger" type="submit" id="confirmDuplicateVagaButton">Salvar</button>
+                </div> 
+            </form>     
+        </div>
+    </div>
+</div>

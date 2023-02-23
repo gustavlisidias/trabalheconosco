@@ -1,0 +1,71 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load chartkick %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'adm/assets/css/candidatos.css' %}?{% now 'U' %}" type="text/css" />
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Questionários >> Editar</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Contas -->
+			<section>
+				<form method="POST">
+					{% csrf_token %}
+					{% for i in questionario %}
+						<header class="major">
+							<h3>Questionário - {{ i.usuario }}</h3>
+						</header>
+
+						Descreva como é um bom lugar para se trabalhar:
+						<textarea class="form-control mb-5" readonly name="pergunta1" id="id_pergunta1">{{ i.pergunta1 }}</textarea><br>
+
+						Você prefere trabalhar sozinho ou em equipe?
+						<textarea class="form-control mb-5" readonly name="pergunta2" id="id_pergunta2">{{ i.pergunta2 }}</textarea><br>
+
+						Qual foi sua maior conquista até hoje (pessoal ou profissional)?
+						<textarea class="form-control mb-5" readonly name="pergunta3" id="id_pergunta3">{{ i.pergunta3 }}</textarea><br>
+
+						Qual o seu maior sonho?
+						<textarea class="form-control mb-5" readonly name="pergunta4" id="id_pergunta4">{{ i.pergunta4 }}</textarea><br>
+
+						Por que deseja trabalhar conosco?
+						<textarea class="form-control mb-5" readonly name="pergunta5" id="id_pergunta5">{{ i.pergunta5 }}</textarea>
+
+						Pontuação
+						<input type="number" step="0.01" name="pontuacao_questionario" id="pontuacao_questionario" placeholder="{{ i.pontuacao_questionario }}">
+					{% endfor %}
+					<br>
+					<button class="btn mt-5" type="submit">Salvar</button>
+				</form>
+
+				<style>
+					[type="number"] {
+						height: 2.75em;
+						border: solid 1px rgba(210, 215, 217, 0.75);
+						border-radius: 5px;
+					}
+				</style>
+			</section>
+			<!-- Fim Contas -->
+
+		</div>
+	</div>
+
+	{% include 'menu.html' %}
+	{% include 'adm/assets/js/main.html' %}
+	
+</div>
+{% endblock content %}

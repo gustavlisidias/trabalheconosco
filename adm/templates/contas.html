@@ -1,0 +1,159 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load chartkick %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'adm/assets/css/candidatos.css' %}?{% now 'U' %}" type="text/css" />
+
+<div id="wrapper">
+	<div id="main">
+		<div class="inner">
+
+			{% include 'mensagem.html' %}
+
+			<!-- Inicio Header -->
+			<header id="header">
+				<span class="label"><strong>Administração</strong> >> Contas</span>
+				<ul class="icons">
+					<li style="font-size: 18px; letter-spacing:0.1em"><strong>RECSEL <i class="fas fa-address-card"></i></strong></li>
+				</ul>
+			</header>
+			<!-- Fim Header -->
+
+			<!-- Inicio Contas -->
+			<section>
+				<form method="GET" action="" id="searchform">
+					<div class="d-flex flex-row justify-content-end">
+						<div class="p-2">
+							<input class="searchfield" list="bloqueados" autocomplete="off" id="searchboxq" name="s" type="text" value="{{ request.GET.s }}" placeholder="Status" style="border-radius: 5px;">
+							<datalist id="bloqueados">
+								<option value="Bloqueados"/>
+								<option value="Ativos"/>
+							</datalist>
+						</div>
+						<div class="p-2">
+							<input class="searchfield" autocomplete="off" id="searchboxq" name="q" type="text" value="{{ request.GET.q }}" placeholder="Usuário" style="border-radius: 5px;">
+						</div>
+						<div class="p-2">
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+				</form>
+				<header class="major">
+					<h2>Contas Cadastradas</h2>
+				</header>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Usuário</th>
+							<th scope="col">Email</th>
+							<th scope="col">Criação</th>
+							<th style="text-align: center;" scope="col">Interno</th>
+							<th style="text-align: center;" scope="col">Gestor</th>
+							<th style="text-align: center;" scope="col">Admin</th>
+							<th style="text-align: center;" scope="col">Ativo</th>
+						</tr>
+					</thead>
+					<form method="POST">
+						{% csrf_token %}
+						<tbody>
+							{% for i in usuarios %}
+								<tr>
+									<td>{{i.username|title}}</td>
+									<td>{{i.email}}</td>
+									<td>{{i.data_inscricao|date:"SHORT_DATE_FORMAT"}}</td>
+
+									{% if i.is_interno %}
+										<td style="text-align: center;">
+											<button style="all: unset;" type="submit" name="remove_interno" value="{{ i.id }}" title="Remove status nterno">
+												<i style="color:green" class="fa-solid fa-check-circle"></i>
+											</button>
+										</td>
+									{% else %}
+										<td style="text-align: center;">
+											<button style="all: unset;" type="submit" name="add_interno" value="{{ i.id }}" title="Adiciona status interno">
+												<i style="color:red" class="fa-solid fa-check-circle"></i>
+											</button>
+										</td>
+									{% endif %}
+
+									{% if i.is_gestor %}
+										<td style="text-align: center;">
+											<button style="all: unset;" type="submit" name="remove_gestor" value="{{ i.id }}" title="Remove status gestor">
+												<i style="color:green" class="fa-solid fa-check-circle"></i>
+											</button>
+										</td>
+									{% else %}
+										<td style="text-align: center;">
+											<button style="all: unset;" type="submit" name="add_gestor" value="{{ i.id }}" title="Adiciona status gestor">
+												<i style="color:red" class="fa-solid fa-check-circle"></i>
+											</button>
+										</td>
+									{% endif %}
+
+									{% if i.is_admin %}
+										<td style="text-align: center;">
+											<button style="all: unset;" type="submit" name="remove_admin" value="{{ i.id }}" title="Remove status admin">
+												<i style="color:green" class="fa-solid fa-check-circle"></i>
+											</button>
+										</td>
+									{% else %}
+										<td style="text-align: center;">
+											<button style="all: unset;" type="submit" name="add_admin" value="{{ i.id }}" title="Adiciona status admin">
+												<i style="color:red" class="fa-solid fa-check-circle"></i>
+											</button>
+										</td>
+									{% endif %}	
+
+									{% if i.is_active %}
+										<td style="text-align: center;">
+											<button style="all: unset;" type="submit" name="remove_ativo" value="{{ i.id }}" title="Bloquear usuário">
+												<i style="color:green" class="fa-solid fa-check-circle"></i>
+											</button>
+										</td>
+									{% else %}
+										<td style="text-align: center;">
+											<button style="all: unset;" type="submit" name="add_ativo" value="{{ i.id }}" title="Desbloquear usuário">
+												<i style="color:red" class="fa-solid fa-times-circle"></i>
+											</button>
+										</td>
+									{% endif %}	
+									
+								</tr>
+							{% endfor %}
+
+							{% if usuarios.has_other_pages %}
+								<ul class="pagination">
+									{% if usuarios.has_previous %}
+										<li><a href="?page={{ usuarios.previous_page_number }}">&laquo;</a></li>
+									{% else %}
+										<li class="disabled"><span>&laquo;</span></li>
+									{% endif %}
+									{% for i in usuarios.paginator.page_range %}
+										{% if usuarios.number == i %}
+											<li style="border-bottom: 1px solid;" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+										{% else %}
+											<li><a href="?page={{ i }}">{{ i }}</a></li>
+										{% endif %}
+									{% endfor %}
+									{% if usuarios.has_next %}
+										<li><a href="?page={{ usuarios.next_page_number }}">&raquo;</a></li>
+									{% else %}
+										<li class="disabled"><span>&raquo;</span></li>
+									{% endif %}
+								</ul>
+							{% endif %}
+						</tbody>
+					</form>
+				</table>
+			</section>
+			<!-- Fim Contas -->
+
+		</div>
+	</div>
+
+	{% include 'menu.html' %}
+	{% include 'adm/assets/js/main.html' %}
+	
+</div>
+{% endblock content %}

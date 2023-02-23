@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+{% load static %}
+
+<head>
+  <title>Colorado Máquinas | Administração - Trabalhe Conosco</title>
+  <link rel="icon" href="{% static 'base/images/logo01.png' %}">
+  <link rel="stylesheet" href="{% static 'adm/assets/css/main.css' %}?{% now 'U' %}" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+</head>
+
+<body class="is-preload">
+  {% block content %}
+
+
+  {% endblock content %}
+
+  <!-- Inicio Scripts -->
+	<script type="text/javascript" src="{% static 'adm/assets/js/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'adm/assets/js/browser.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'adm/assets/js/breakpoints.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'adm/assets/js/util.js' %}"></script>
+	<script type="text/javascript" src="{% static 'adm/assets/js/main.js' %}"></script>
+  <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+  <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+	<!-- Fim Scripts -->
+</body>
+
+  
+</html>
